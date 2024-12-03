@@ -99,6 +99,15 @@
     </style>
     
     <script type="text/javascript">
+
+        fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // You can now use the data in your app
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+
     
     const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
     var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
