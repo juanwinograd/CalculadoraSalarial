@@ -1,21 +1,24 @@
 {
-  "Diciembre 2023": {
-    "PuntoIndice": 76.7499,
-    "Dec483": 157538,
-    "Dec483Piso": 147690,
-    "SumaFija": 0,
-    "AdicionalEspecial": 77000,
-    "FONID": 32900,
-    "Conectividad": 24500,
-    "AdicionalExtendida": 54062,
-    "MDM0_60": 134148,
-    "MDM0_60Piso": 128724,
-    "MDM70_120": 166228,
-    "MDM70_120Piso": 159518,
-    "SalarioMinimo": 543030,
-    "SalarioMinimoPiso": 431518,
-    "SalarioMinimoPisoJS": 165941
+  "2023" : {
+    "Diciembre": {
+        "PuntoIndice": 76.7499,
+        "Dec483": 157538,
+        "Dec483Piso": 147690,
+        "SumaFija": 0,
+        "AdicionalEspecial": 77000,
+        "FONID": 32900,
+        "Conectividad": 24500,
+        "AdicionalExtendida": 54062,
+        "MDM0_60": 134148,
+        "MDM0_60Piso": 128724,
+        "MDM70_120": 166228,
+        "MDM70_120Piso": 159518,
+        "SalarioMinimo": 543030,
+        "SalarioMinimoPiso": 431518,
+        "SalarioMinimoPisoJS": 165941
+      }
   },
+  "2024" : {
     "Enero": {
       "PuntoIndice": 84.4249,
       "Dec483": 187814,
@@ -221,3 +224,4 @@
       "SalarioMinimoPisoJS": 391240
     }
   }
+}
