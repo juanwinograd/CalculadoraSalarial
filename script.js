@@ -2,7 +2,7 @@ var valor_items;
 fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems.json')
     .then(response => response.json())
     .then(data => {
-        valor_items = data;
+        valor_items = data["2024"];
         var select = document.createElement('select');
         select.setAttribute("class","tdForm");
         select.setAttribute("id","mes");
