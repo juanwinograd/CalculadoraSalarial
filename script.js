@@ -20,6 +20,14 @@ fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/val
         select.setAttribute("onchange","elegir_mes(event)");
     })
     .catch(error => console.error('Error loading JSON:', error));
+    
+var ipc;
+fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc.json')
+    .then(response => response.json())
+    .then(data => {
+        ipc = data;
+    })
+    .catch(error => console.error('Error loading JSON:', error));
 
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
 var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
@@ -91,9 +99,6 @@ var items = {basico : {nombre : "Sueldo Básico", tope : 0, tipo : 'r', descripc
             embarazo : {nombre: 'Asignación por embarazo', tope : 0, tipo : 'a'},
             conviviente : {nombre: 'Asignación por conyugüe o conviviente', tope : 0, tipo : 'a'}
         };
-
-//REPENSAR
-//var valoresJC.MDM, valoresJC.MDMPiso;
 
 var mostrarDetalle = false, segundoCargo = false, mostrarAsignaciones = false;
 
