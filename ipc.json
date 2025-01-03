@@ -1,13 +1,29 @@
 {
-    "Enero" : 834.20,
-    "Febrero" : 951.99,
-    "Marzo" : 1077.95,
-    "Abril" : 1183.17,
-    "Mayo" : 1234.95,
-    "Junio" : 1294.53,
-    "Julio" : 1360.55,
-    "Agosto" : 1417.46,
-    "Septiembre" : 1474.29,
-    "Octubre" : 1522.05,
-    "Noviembre" : 1570.26
+    "2023"  : {
+        "Enero" : 246.41,
+        "Febrero" : 261.19,
+        "Marzo" : 279.75,
+        "Abril" : 301.46,
+        "Mayo" : 324.20,
+        "Junio" : 347.38,
+        "Julio" : 372.82,
+        "Agosto" : 413.08,
+        "Septiembre" : 462.47,
+        "Octubre" : 505.82,
+        "Noviembre" : 565.99,
+        "Diciembre" : 685.40
+    },
+    "2024" : {
+        "Enero" : 834.20,
+        "Febrero" : 951.99,
+        "Marzo" : 1077.95,
+        "Abril" : 1183.17,
+        "Mayo" : 1234.95,
+        "Junio" : 1294.53,
+        "Julio" : 1360.55,
+        "Agosto" : 1417.46,
+        "Septiembre" : 1474.29,
+        "Octubre" : 1522.05,
+        "Noviembre" : 1570.26
+    }
 }
