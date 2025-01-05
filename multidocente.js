@@ -1,56 +1,6 @@
-var valor_items, mes = "";
-fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems.json')
-    .then(response => response.json())
-    .then(data => {
-        valor_items = data["2024"];
-        var select = document.createElement('select');
-        select.setAttribute("class","tdForm");
-        select.setAttribute("id","mes");
-        const optionElement = document.createElement("option");  
-        optionElement.textContent = 'Seleccionar mes'; 
-        optionElement.value = ''; 
-        select.appendChild(optionElement);
-        for (m in valor_items) { 
-            const optionElement = document.createElement("option"); 
-            optionElement.value = m; 
-            optionElement.textContent = m; 
-            select.appendChild(optionElement); 
-        };
-        document.getElementById("contenedor-mes").appendChild(select);
-        select.setAttribute("onchange","elegir_mes(event)");
-    })
-    .catch(error => console.error('Error loading JSON:', error));
-    
-var ipc;
-fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc.json')
-    .then(response => response.json())
-    .then(data => {
-        ipc = data;
-    })
-    .catch(error => console.error('Error loading JSON:', error));
-
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
 var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
 var DescuentoAdemys = 0, DescuentoPresentismo = 0;
-
-//Valores para JC
-var valoresJC = {
-    PuntoIndice : 0,
-    Dec483 : 0,
-    Dec483Piso : 0,
-    SumaFija : 0,
-    AdicionalEspecial : 0,
-    FONID : 0,
-    Conectividad : 0,
-    AdicionalExtendida : 0,
-    MDM0_60 : 0,
-    MDM0_60Piso : 0,
-    MDM70_120 : 0,
-    MDM70_120Piso : 0,
-    SalarioMinimo : 0,
-    SalarioMinimoPiso : 0,
-    SalarioMinimoPisoJS : 0
-}
 
 const AumentoAsignaciones = 1.2375*1.25625*1.5641*1.5*1.8666667*1.68;
 const ValorUMAF = 50*AumentoAsignaciones;
@@ -70,38 +20,453 @@ const MontosAsignaciones = {
             violencia : [366,366,336,0]
 };
 
-var items = {basico : {nombre : "Sueldo Básico", tope : 0, tipo : 'r', descripcion : "Sueldo básico de acuerdo al cargo"},
-            jerarquizacion : {nombre : "Plus Jerarquización", tope: 0, tipo : 'r', descripcion : "En general es el 15% del básico. Para directorxs hay un plus adicional que dependiendo de la cantidad de turnos y secciones puede ser 6, 10 o 15%, acá sumamos el 6%"},
-            dedicacionExclusiva : {nombre : "Dedicación Exclusiva", tope: 0, tipo : 'r', descripcion : "Plus para rectorx de media de 40 horas semanales"},
-            antiguedadBasico : {nombre : "Antigüedad", tope: 0, tipo : 'r', descripcion : "Antigüedad sobre el básico"},
-            presentismo : {nombre : "Adicional Salarial", tope: 0, tipo : 'r', descripcion : "Presentismo: 10% del básico y del Decreto 483/05. Se paga con un mes de atraso."},
-            dec483 : {nombre : "Suma Decreto 483/05", tope: valoresJC.Dec483, tipo : 'r', descripcion : "$"+(valoresJC.Dec483/2)+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"},
-            antiguedadDec483 : {nombre : "Antigüedad Dec. 483", tope: valoresJC.Dec483, tipo : 'r', descripcion :  "Antigüedad sobre el Decreto 483/05"},
-            mdm : {nombre : "Material Didáctico Mensual", tope: 0, tipo : 'nr', descripcion :  ""},
-            minimo : {nombre : "Salario Mínimo", tope: valoresJC.SalarioMinimo, tipo : 'minimo'},
-            cmg : {nombre : "Complemento Mínimo Garantizado", tope: 0, tipo : 'nr', descripcion :  "Es la diferencia entre lo que sería tu sueldo por antigüedad y el salario mínimo docente"},
-            adicionalEsp : {nombre : "Compensación Fija Proporcional", tope: valoresJC.AdicionalEspecial, tipo : 'nr', descripcion :  "$"+(valoresJC.AdicionalEspecial/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"},
-            fonid : {nombre : "Fo.Na.In.Do", tope: valoresJC.FONID, tipo : 'nr', descripcion :  "$"+(valoresJC.FONID/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"},
-            conectividad : {nombre : "Compensación Transitoria", tope: valoresJC.Conectividad, tipo : 'nr', descripcion :  "(reemplazó al item Conectividad) $"+(valoresJC.Conectividad/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"},
-            sumaFija : {nombre : "Suma Fija", tope: valoresJC.SumaFija, tipo : 'nr', descripcion :  "$"+(valoresJC.SumaFija/2)+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"},
-            adicionalExtendida : {nombre : "Adicional Turno Extendido", tope: valoresJC.AdicionalExtendida, tipo : 'nr', descripcion :  "Adicional de $"+(valoresJC.AdicionalExtendida)+" para el cargo de turno extendido de Primera Infancia"},
-            supleEscRec : {nombre : "Suplemento Esc. Recupración", tope: 0, tipo : 'r', descripcion :  "15% sobre las sumas bonificables, para docentes de Especial."},
-            sueldoBruto : {nombre : "Sueldo Bruto", tope: 0, tipo : 's'},
-            descuentoOS : {nombre : "Obra Social", tope: 0, tipo : 'd', descripcion :  "6% de las cifras remunerativa. Son dos items: 3% para la obra social y otro 3% para otorgar cobertura a jubilados."},
-            descuentoJubilacion : {nombre : "Jubilación", tope: 0, tipo : 'd', descripcion :  "13% de las cifras remunerativas. 11% del régimen general más un 2% del régimen especial docente."},
-            descuentoFCompensador : {nombre : "Fondo Compensador", tope: 0, tipo : 'd', descripcion :  "0,3% de las cifras remunerativas. Es un seguro de vida obligatorio."},
-            descuentoCajaComp : {nombre : "Caja Complementaria", tope: 0, tipo : 'd', descripcion :  "4,5% de las cifras remunerativas. Es un aporte extra para acceder a un complemento a la jubilación. Se aplica por defecto a los docentes de privada."},
-            descuentoAdemys : {nombre : "ADEMYS", tope: 0, tipo : 'd', descripcion :  "1,5% de las cifras remunerativas y del C.M.G."},
-            descuentoPresentismo : {nombre : "Desc. Adicional Salarial", tope: 0, tipo : 'd', descripcion :  "Presentismo: 10% del básico y del Decreto 483/05. Se descuenta con un mes de atraso."},
-            sueldoNeto : {nombre : "Sueldo Neto", tope: 0, tipo : 's'},
-            hijo : {nombre: 'Asignación Hijo/a', tope : 0, tipo : 'a'},
-            hijoDiscapacidad : {nombre: 'Asignación Hijo/a con discapacidad', tope : 0, tipo : 'a'},
-            embarazo : {nombre: 'Asignación por embarazo', tope : 0, tipo : 'a'},
-            conviviente : {nombre: 'Asignación por conyugüe o conviviente', tope : 0, tipo : 'a'}
+class Cargo {
+    constructor(area, jornada, puntaje = 0, horas = 0, plus = 0, plusEscRecuperacion = 0, plusExclusiva = 0) {
+        this.area = area;
+        this.jornada = jornada;
+        this.puntaje = puntaje;
+        this.horas = horas;
+        this.plus = plus;
+        this.plusEscRecuperacion = plusEscRecuperacion;
+        this.plusExclusiva = plusExclusiva;
+    } 
+}
+
+class Docente {
+    constructor(mes) {
+        this.cargo0 = new Cargo();
+        this.cargos = [this.cargo0];
+
+        // if (mes) {
+        //     this.valoresJC = valor_items[mes];
+        //     this.fijar_antiguedad(0);
+        //     this.cargos[0].valoresJC = this.valoresJC;
+        // }
+    }
+
+    //calcula el valor de cada item para el cargo
+    calcular_items(cargo) {		
+        
+        //Valores JC
+        let PuntoIndice = this.valoresJC.PuntoIndice,
+        Dec483 = this.valoresJC.Dec483,
+        Dec483Piso = this.valoresJC.Dec483Piso,
+        SumaFija = this.valoresJC.SumaFija,
+        AdicionalEspecial = this.valoresJC.AdicionalEspecial,
+        FONID = this.valoresJC.FONID,
+        Conectividad = this.valoresJC.Conectividad,
+        SalarioMinimo = this.valoresJC.SalarioMinimo,
+        SalarioMinimoPiso = this.valoresJC.SalarioMinimoPiso,
+        SalarioMinimoPisoJS = this.valoresJC.SalarioMinimoPisoJS,
+        MDM = this.valoresJC.MDM;
+
+        var proporcion;
+            
+        if (cargo.jornada == "JS") {
+            cargo.dec483 = Dec483/2; cargo.fonid = FONID/2; cargo.conectividad = Conectividad/2; cargo.adicionalEsp = AdicionalEspecial/2; cargo.minimo = SalarioMinimo/2; cargo.mdm = MDM/2;
+            cargo.sumaFija = SumaFija/2;
+
+            proporcion = cargo.puntaje/1135;
+            // si el puntaje es menor a 1135 hago proporcional a menos que quede por debajo del piso
+            if (proporcion < 1) {
+                if (cargo.dec483*proporcion > Dec483Piso/2) {cargo.dec483 = Dec483/2*proporcion;} else {cargo.dec483 = Dec483Piso/2;}
+                if (cargo.minimo*proporcion > SalarioMinimoPisoJS) {cargo.minimo = SalarioMinimo/2*proporcion;} else {cargo.minimo = SalarioMinimoPisoJS}
+                if (cargo.mdm*proporcion > MDMPiso/2) {cargo.mdm = MDM/2*proporcion;} else {cargo.mdm = valoresJC.MDMPiso/2;}
+                cargo.sumaFija = cargo.sumaFija*proporcion;
+            }
+            if (cargo.horas > 0) {   	   			
+                cargo.adicionalEsp = item_horas(cargo.horas,30,AdicionalEspecial);
+                cargo.fonid = item_horas(cargo.horas,30,FONID);
+                cargo.conectividad = item_horas(cargo.horas,30,Conectividad);
+            }
+        }
+        else if (cargo.jornada == "JC") {
+            cargo.dec483 = Dec483; cargo.fonid = FONID; cargo.conectividad = Conectividad; cargo.adicionalEsp = AdicionalEspecial; cargo.minimo = SalarioMinimo; cargo.mdm = MDM;
+            cargo.sumaFija = SumaFija;
+
+            proporcion = cargo.puntaje/2070;
+            if (proporcion < 1) {
+                if (cargo.dec483*proporcion > Dec483Piso) {cargo.dec483 = Dec483*proporcion;} else {cargo.dec483 = Dec483Piso;}
+                if (cargo.minimo*proporcion > SalarioMinimoPiso) {cargo.minimo = SalarioMinimo*proporcion;} else {cargo.minimo = SalarioMinimoPiso;}
+                if (cargo.mdm*proporcion > MDMPiso) {cargo.mdm = MDM*proporcion;} else {cargo.mdm = MDMPiso;}
+                cargo.sumaFija = SumaFija*proporcion;
+            }
+        }
+        // horas    	   	
+        else if (cargo.jornada == "HorasM") {
+            cargo.dec483 = item_horas(cargo.horas,38,Dec483);
+            cargo.mdm = item_horas(cargo.horas,38,MDM);
+            cargo.sumaFija = item_horas(cargo.horas,38,SumaFija);
+            cargo.adicionalEsp = item_horas(cargo.horas,30,AdicionalEspecial);
+            cargo.fonid = item_horas(cargo.horas,30,FONID);
+            cargo.conectividad = item_horas(cargo.horas,30,Conectividad);
+            cargo.minimo = item_horas(cargo.horas,40,SalarioMinimo);
+        }
+        else if (cargo.jornada == "HorasT") {
+            cargo.dec483 = item_horas(cargo.horas,38,Dec483);
+            cargo.mdm = item_horas(cargo.horas,38,MDM);
+            cargo.sumaFija = item_horas(cargo.horas,38,SumaFija);
+            cargo.adicionalEsp = item_horas(cargo.horas,24,AdicionalEspecial);
+            cargo.fonid = item_horas(cargo.horas,24,FONID);
+            cargo.conectividad = item_horas(cargo.horas,24,Conectividad);
+            cargo.minimo = item_horas(cargo.horas,40,SalarioMinimo);
+        }
+        //basico
+        cargo.basico =  cargo.puntaje*PuntoIndice;
+
+        //si no corresponde los plus son 0	
+        cargo.jerarquizacion = cargo.basico*cargo.plus;
+        cargo.dedicacionExclusiva = cargo.plusExclusiva*PuntoIndice;
+        cargo.supleEscRec = (cargo.basico+cargo.dec483)*cargo.plusEscRecuperacion;
+        
+        //Jerarquizacion y su proporcional del presentismo no cuentan para cmg
+        // cargo.minimo = cargo.minimo + cargo.jerarquizacion*1.1*Rem;
+
+
+        cargo.antiguedadBasico = (cargo.basico + cargo.jerarquizacion + cargo.dedicacionExclusiva)*antiguedad;
+        cargo.antiguedadDec483 = cargo.dec483*antiguedad
+    }
+
+    //calcula el sueldo para un cargo
+    calcular_sueldo() {
+
+        //sumo las cifras remunerativas
+        this.sinCMG = (this.basico*1.1 + this.dec483*1.1 + this.antiguedadBasico + this.antiguedadDec483 + this.supleEscRec)*Rem;
+
+        //segun antiguedad mdm es remunerativo o no
+        if (antiguedad >= 0.5)
+            this.sinCMG = this.sinCMG + this.mdm*Rem;
+        else
+            this.sinCMG = this.sinCMG + this.mdm
+            
+        //si quedo por debajo del minimo, la diferencia me da el cmg
+        if (this.sinCMG < this.minimo) {this.cmg = this.minimo - this.sinCMG}
+        else {this.cmg = 0;}
+
+        //calculo adicional salarial por presentismo
+        this.presentismo = (this.basico + this.dec483 + this.jerarquizacion + this.dedicacionExclusiva)*0.1;
+        // descuento presentismo
+        if (DescuentoPresentismo) {            
+            this.descuentoPresentismo = -this.presentismo;
+            this.presentismo = 0;
+        }
+        else
+            this.descuentoPresentismo = 0;
+
+        // sumo todo lo remunerativo
+        this.remus = this.basico + this.dec483 + this.jerarquizacion + this.dedicacionExclusiva
+                    + this.presentismo + this.antiguedadBasico + this.antiguedadDec483 + this.supleEscRec;
+        if (antiguedad >= 0.5) this.remus = this.remus + this.mdm;
+
+        // descuentos
+        this.descuentoOS = -this.remus*DescuentoOS;
+        this.descuentoJubilacion = -this.remus*DescuentoJubilacion;
+        if (privada) { 
+            this.descuentoCajaComp = -this.remus*DescuentoCajaComp; 
+            this.descuentoFCompensador = 0;
+        }
+        else {
+            this.descuentoFCompensador = -this.remus*DescuentoFCompensador;
+            this.descuentoCajaComp = 0;
+        }
+        this.descuentoAdemys = -(this.remus + this.cmg)*DescuentoAdemys;
+        this.descuentoTotal = this.descuentoOS + this.descuentoJubilacion 
+                    + this.descuentoFCompensador + this.descuentoCajaComp + this.descuentoAdemys;	
+
+        //para el bruto sumo todo
+        this.sueldoBruto = this.remus + this.fonid + this.conectividad + this.adicionalEsp + this.cmg + this.sumaFija;
+        if (antiguedad < 0.5) this.sueldoBruto = this.sueldoBruto + this.mdm;
+
+        //Primera Infancia
+        if (this.adicionalExtendida > 0) {this.sueldoBruto = this.sueldoBruto + this.adicionalExtendida;}
+                
+        //para el neto resto los descuentos
+        this.sueldoNeto = this.sueldoBruto + this.descuentoTotal;
+    }
+
+    //suma todos los cargos de un docente
+    sumar_cargos() {
+        for (let key in items) {
+            let suma = 0;
+            for (let cargo of this.cargos) {
+                suma += cargo[key];
+            }
+            if (items[key].tope && suma > items[key].tope) {
+                this[key] = this.valoresJC[key];
+            }
+            else {
+                this[key] = suma;
+            }
+            console.log(key, suma, this[key]);
+        }
+        this.calcular_sueldo();
+    }
+
+    //calcula el sueldo de un docente con 1 o más cargos
+    calcular_sueldo_docente() {
+        for (let cargo of this.cargos) {
+            this.calcular_items(cargo);
+        }
+        this.sumar_cargos();
+        this.calcular_sueldo();        
+        this.sumar_asignaciones();
+    }    
+
+    //suma asigaciones segun ley octubre 2021
+    sumar_asignaciones() {
+        let franja;
+        let sueldo = this.sueldoBruto;
+        if (sueldo >= TopesAsignaciones[2]) {
+            for (asignacion in this.asignaciones) { 
+                this[asignacion] = MontosAsignaciones[asignacion][3]*this.asignaciones[asignacion]; 
+                items[asignacion].descripcion = "Superaste el tope puesto por la nueva ley. Si venías cobrando de antes, tenés que seguir cobrando el mismo monto"
+            }
+        }
+        else {
+            if (sueldo >= TopesAsignaciones[1])
+                franja = 2;
+            else if (sueldo >= TopesAsignaciones[0])
+                franja = 1;
+            else
+                franja = 0;
+            for (asignacion in this.asignaciones) {
+                this[asignacion] = MontosAsignaciones[asignacion][franja]*ValorUMAF*this.asignaciones[asignacion];
+                // if (this.horas < 18) {this[asignacion] = this.asignacion*0.5;}
+                this.sueldoBruto += this[asignacion];
+                this.sueldoNeto += this[asignacion];
+            }
+        }
+    }
+
+    //muestra un detalle del sueldo
+    detalle() {
+        var detalle = [];
+        for (let key in items) {
+            if (key != "minimo" && this[key] != undefined && this[key] != 0) {
+                let item = {
+                    nombre: items[key].nombre,
+                    monto: Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(this[key]),
+                    tipo: items[key].tipo, 
+                    descripcion: items[key].descripcion
+                }
+                if (this[key] == items[key].tope) {
+                    item.max = true;
+                }
+                detalle.push(item);
+            }
+        }
+        return(detalle);
+    }
+
+    fijar_antiguedad(ant) {
+        if (ant <= 0.4)	{
+            this.valoresJC.MDM = this.valoresJC.MDM0_60; this.valoresJC.MDMPiso = this.valoresJC.MDM0_60Piso;
+            items.mdm.tipo = 'nr';
+            //items.mdm.descripcion = "Hasta los 6 años antigüedad son $"+this.valoresJC.MDM/2+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs";
+        }
+        else {
+            this.valoresJC.MDM = this.valoresJC.MDM70_120; this.valoresJC.MDMPiso = this.valoresJC.MDM70_120Piso;
+            items.mdm.tipo = 'r';
+            //items.mdm.descripcion = "Desde los 7 años antigüedad son $"+this.valoresJC.MDM/2+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"
+        }
+    }
+}
+
+var valor_items, mes = "";
+fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems_minuscula.json')
+    .then(response => response.json())
+    .then(data => {
+        valor_items = data["2024"];
+        var select = document.createElement('select');
+        select.setAttribute("class","tdForm");
+        select.setAttribute("id","mes");
+        const optionElement = document.createElement("option");  
+        optionElement.textContent = 'Seleccionar mes'; 
+        optionElement.value = ''; 
+        select.appendChild(optionElement);
+        for (let mes in valor_items) { 
+            const optionElement = document.createElement("option"); 
+            optionElement.value = mes; 
+            optionElement.textContent = mes; 
+            select.appendChild(optionElement); 
         };
+        document.getElementById("contenedor-mes").appendChild(select);
+        select.setAttribute("onchange","elegir_mes(event)");
+    })
+    .catch(error => console.error('Error loading JSON:', error));
+    
+var ipc;
+fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc.json')
+    .then(response => response.json())
+    .then(data => {
+        ipc = data;
+    })
+    .catch(error => console.error('Error loading JSON:', error));
+
+var items = {
+    basico : {
+        nombre : "Sueldo Básico", 
+        tope : false, 
+        tipo : 'r', 
+        //descripcion : "Sueldo básico de acuerdo al cargo"    
+    },
+    jerarquizacion : {
+        nombre : "Plus Jerarquización",
+        tope : false,
+        tipo : 'r',
+        //descripcion : "En general es el 15% del básico. Para directorxs hay un plus adicional que dependiendo de la cantidad de turnos y secciones puede ser 6,   10 o 15%, acá sumamos el 6%"
+    },
+    dedicacionExclusiva : {
+        nombre : "Dedicación Exclusiva",
+        tope : false,
+        tipo : 'r',
+        //descripcion : "Plus para rectorx de media de 40 horas semanales"
+    },
+    antiguedadBasico : {
+        nombre : "Antigüedad",
+        tope : false,
+        tipo : 'r',
+        //descripcion : "Antigüedad sobre el básico"
+    },
+    presentismo : {
+        nombre : "Adicional Salarial",
+        tope : false,
+        tipo : 'r',
+        //descripcion : "Presentismo: 10% del básico y del Decreto 483/05. Se paga con un mes de atraso."
+    },
+    dec483 : {
+        nombre : "Suma Decreto 483/05",
+        tope : true,
+        tipo : 'r',
+        //descripcion : "$"+(valoresJC.Dec483/2)+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"
+    },
+    antiguedadDec483 : {
+        nombre : "Antigüedad Dec. 483",
+        tope : true,
+        tipo : 'r',
+        //descripcion :  "Antigüedad sobre el Decreto 483/05"
+    },
+    mdm : {
+        nombre : "Material Didáctico Mensual",
+        tope : false,
+        tipo : 'nr',
+        //descripcion :  ""
+    },
+    salarioMinimo : {
+        nombre : "Salario Mínimo",
+        tope : true,
+        tipo : 'minimo'
+    },
+    cmg : {
+        nombre : "Complemento Mínimo Garantizado",
+        tope : false,
+        tipo : 'nr',
+        //descripcion :  "Es la diferencia entre lo que sería tu sueldo por antigüedad y el salario mínimo docente"
+    },
+    adicionalEsp : {
+        nombre : "Compensación Fija Proporcional",
+        tope : true,
+        tipo : 'nr',
+        //descripcion :  "$"+(valoresJC.AdicionalEspecial/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
+    },
+    fonid : {
+        nombre : "Fo.Na.In.Do",
+        tope : true,
+        tipo : 'nr',
+        //descripcion :  "$"+(valoresJC.FONID/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
+    },
+    conectividad : {
+        nombre : "Compensación Transitoria",
+        tope : true,
+        tipo : 'nr',
+        //descripcion :  "(reemplazó al item Conectividad) $"+(valoresJC.Conectividad/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
+    },
+    sumaFija : {
+        nombre : "Suma Fija",
+        tope : true,
+        tipo : 'nr',
+        //descripcion :  "$"+(valoresJC.SumaFija/2)+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"
+    },
+    adicionalExtendida : {
+        nombre : "Adicional Turno Extendido",
+        tope : true,
+        tipo : 'nr',
+        //descripcion :  "Adicional de $"+(valoresJC.AdicionalExtendida)+" para el cargo de turno extendido de Primera Infancia"
+    },
+    supleEscRec : {
+        nombre : "Suplemento Esc. Recupración",
+        tope : false,
+        tipo : 'r',
+        //descripcion :  "15% sobre las sumas bonificables, para docentes de Especial."
+        },
+    sueldoBruto : {
+        nombre : "Sueldo Bruto",
+        tope : false,
+        tipo : 's'
+    },
+    descuentoOS : {
+        nombre : "Obra Social",
+        tope : false,
+        tipo : 'd',
+        //descripcion :  "6% de las cifras remunerativa. Son dos items: 3% para la obra social y otro 3% para otorgar cobertura a jubilados."
+    },
+    descuentoJubilacion : {
+        nombre : "Jubilación",
+        tope : false,
+        tipo : 'd',
+        //descripcion :  "13% de las cifras remunerativas. 11% del régimen general más un 2% del régimen especial docente."
+    },
+    descuentoFCompensador : {
+        nombre : "Fondo Compensador",
+        tope : false,
+        tipo : 'd',
+        //descripcion :  "0,3% de las cifras remunerativas. Es un seguro de vida obligatorio."
+    },
+    descuentoCajaComp : {
+        nombre : "Caja Complementaria",
+        tope : false,
+        tipo : 'd',
+        //descripcion :  "4,5% de las cifras remunerativas. Es un aporte extra para acceder a un complemento a la jubilación. Se aplica por defecto a los docentes de privada."
+    },
+    descuentoAdemys : {
+        nombre : "ADEMYS",
+        tope : false,
+        tipo : 'd',
+        //descripcion :  "1,5% de las cifras remunerativas y del C.M.G."
+    },
+    descuentoPresentismo : {
+        nombre : "Desc. Adicional Salarial",
+        tope : false,
+        tipo : 'd',
+        //descripcion :  "Presentismo: 10% del básico y del Decreto 483/05. Se descuenta con un mes de atraso."
+    },
+    sueldoNeto : {
+        nombre : "Sueldo Neto",
+        tope : false,
+        tipo : 's'
+    },
+    hijo : {
+        nombre: 'Asignación Hijo/a',
+        tope : false,
+        tipo : 'a'
+    },
+    hijoDiscapacidad : {
+        nombre: 'Asignación Hijo/a con discapacidad',
+        tope : false,
+        tipo : 'a'
+    },
+    embarazo : {
+        nombre: 'Asignación por embarazo',
+        tope : false,
+        tipo : 'a'
+    },
+    conviviente : {
+        nombre: 'Asignación por conyugüe o conviviente',
+        tope : false,
+        tipo : 'a'}
+};
 
 var mostrarDetalle = false, segundoCargo = false, mostrarAsignaciones = false;
-
 var privada = false;
 var antiguedad = -1; //esto podría ser una propiedad del docente. pensar
 var asignaciones = {
@@ -123,238 +488,6 @@ function item_horas(hs, maxHoras, tope) {
     }
     return(item);
 }
-
-//calcula el valor de cada item para el cargo
-function calcular_items() {		
-    
-    //Valores JC
-    let PuntoIndice = valoresJC.PuntoIndice,
-    Dec483 = valoresJC.Dec483,
-    Dec483Piso = valoresJC.Dec483Piso,
-    SumaFija = valoresJC.SumaFija,
-    AdicionalEspecial = valoresJC.AdicionalEspecial,
-    FONID = valoresJC.FONID,
-    Conectividad = valoresJC.Conectividad,
-    SalarioMinimo = valoresJC.SalarioMinimo,
-    SalarioMinimoPiso = valoresJC.SalarioMinimoPiso,
-    SalarioMinimoPisoJS = valoresJC.SalarioMinimoPisoJS;
-    MDM = valoresJC.MDM
-
-    var proporcion;
-        
-    if (this.jornada == "JS") {
-        this.dec483 = Dec483/2; this.fonid = FONID/2; this.conectividad = Conectividad/2; this.adicionalEsp = AdicionalEspecial/2; this.minimo = SalarioMinimo/2; this.mdm = valoresJC.MDM/2;
-        this.sumaFija = SumaFija/2;
-
-        proporcion = this.puntaje/1135;
-        // si el puntaje es menor a 1135 hago proporcional a menos que quede por debajo del piso
-        if (proporcion < 1) {
-            if (this.dec483*proporcion > Dec483Piso/2) {this.dec483 = Dec483/2*proporcion;} else {this.dec483 = Dec483Piso/2;}
-            if (this.minimo*proporcion > SalarioMinimoPisoJS) {this.minimo = SalarioMinimo/2*proporcion;} else {this.minimo = SalarioMinimoPisoJS}
-            if (this.mdm*proporcion > valoresJC.MDMPiso/2) {this.mdm = valoresJC.MDM/2*proporcion;} else {this.mdm = valoresJC.MDMPiso/2;}
-            this.sumaFija = this.sumaFija*proporcion;
-        }
-        if (this.horas > 0) {   	   			
-            this.adicionalEsp = item_horas(this.horas,30,AdicionalEspecial);
-            this.fonid = item_horas(this.horas,30,FONID);
-            this.conectividad = item_horas(this.horas,30,Conectividad);
-        }
-    }
-    else if (this.jornada == "JC") {
-        this.dec483 = Dec483; this.fonid = FONID; this.conectividad = Conectividad; this.adicionalEsp = AdicionalEspecial; this.minimo = SalarioMinimo; this.mdm = valoresJC.MDM;
-        this.sumaFija = SumaFija;
-
-        proporcion = this.puntaje/2070;
-        if (proporcion < 1) {
-            if (this.dec483*proporcion > Dec483Piso) {this.dec483 = Dec483*proporcion;} else {this.dec483 = Dec483Piso;}
-            if (this.minimo*proporcion > SalarioMinimoPiso) {this.minimo = SalarioMinimo*proporcion;} else {this.minimo = SalarioMinimoPiso;}
-            if (this.mdm*proporcion > valoresJC.MDMPiso) {this.mdm = valoresJC.MDM*proporcion;} else {this.mdm = valoresJC.MDMPiso;}
-            this.sumaFija = SumaFija*proporcion;
-        }
-    }
-    // horas    	   	
-    else if (this.jornada == "HorasM") {
-        this.dec483 = item_horas(this.horas,38,Dec483);
-        this.mdm = item_horas(this.horas,38,valoresJC.MDM);
-        this.sumaFija = item_horas(this.horas,38,SumaFija);
-        this.adicionalEsp = item_horas(this.horas,30,AdicionalEspecial);
-        this.fonid = item_horas(this.horas,30,FONID);
-        this.conectividad = item_horas(this.horas,30,Conectividad);
-        this.minimo = item_horas(this.horas,40,SalarioMinimo);
-    }
-    else if (this.jornada == "HorasT") {
-        this.dec483 = item_horas(this.horas,38,Dec483);
-        this.mdm = item_horas(this.horas,38,valoresJC.MDM);
-        this.sumaFija = item_horas(this.horas,38,SumaFija);
-        this.adicionalEsp = item_horas(this.horas,24,AdicionalEspecial);
-        this.fonid = item_horas(this.horas,24,FONID);
-        this.conectividad = item_horas(this.horas,24,Conectividad);
-        this.minimo = item_horas(this.horas,40,SalarioMinimo);
-    }
-    //basico
-    this.basico =  this.puntaje*PuntoIndice;
-
-    //si no corresponde los plus son 0	
-    this.jerarquizacion = this.basico*this.plus;
-    this.dedicacionExclusiva = this.plusExclusiva*PuntoIndice;
-    this.supleEscRec = (this.basico+this.dec483)*this.plusEscRecuperacion;
-    
-    //Jerarquizacion y su proporcional del presentismo no cuentan para cmg
-    // this.minimo = this.minimo + this.jerarquizacion*1.1*Rem;
-
-
-    this.antiguedadBasico = (this.basico + this.jerarquizacion + this.dedicacionExclusiva)*antiguedad;
-    this.antiguedadDec483 = this.dec483*antiguedad
-}
-
-//calcula el sueldo para un cargo
-function calcular_sueldo() {
-    
-
-    //sumo las cifras remunerativas
-    this.sinCMG = (this.basico*1.1 + this.dec483*1.1 + this.antiguedadBasico + this.antiguedadDec483 + this.supleEscRec)*Rem;
-
-    //segun antiguedad mdm es remunerativo o no
-    if (antiguedad >= 0.5)
-        this.sinCMG = this.sinCMG + this.mdm*Rem;
-    else
-        this.sinCMG = this.sinCMG + this.mdm
-        
-    //si quedo por debajo del minimo, la diferencia me da el cmg
-    if (this.sinCMG < this.minimo) {this.cmg = this.minimo - this.sinCMG}
-    else {this.cmg = 0;}
-
-    //calculo adicional salarial por presentismo
-    this.presentismo = (this.basico + this.dec483 + this.jerarquizacion + this.dedicacionExclusiva)*0.1;
-    // descuento presentismo
-    if (DescuentoPresentismo) {            
-        this.descuentoPresentismo = -this.presentismo;
-        this.presentismo = 0;
-    }
-    else
-        this.descuentoPresentismo = 0;
-
-    // sumo todo lo remunerativo
-    this.remus = this.basico + this.dec483 + this.jerarquizacion + this.dedicacionExclusiva
-                + this.presentismo + this.antiguedadBasico + this.antiguedadDec483 + this.supleEscRec;
-    if (antiguedad >= 0.5) this.remus = this.remus + this.mdm;
-
-    // descuentos
-    this.descuentoOS = -this.remus*DescuentoOS;
-    this.descuentoJubilacion = -this.remus*DescuentoJubilacion;
-    if (privada) { 
-        this.descuentoCajaComp = -this.remus*DescuentoCajaComp; 
-        this.descuentoFCompensador = 0;
-    }
-    else {
-        this.descuentoFCompensador = -this.remus*DescuentoFCompensador;
-        this.descuentoCajaComp = 0;
-    }
-    this.descuentoAdemys = -(this.remus + this.cmg)*DescuentoAdemys;
-    this.descuentoTotal = this.descuentoOS + this.descuentoJubilacion 
-                + this.descuentoFCompensador + this.descuentoCajaComp + this.descuentoAdemys;	
-
-    //para el bruto sumo todo
-    this.sueldoBruto = this.remus + this.fonid + this.conectividad + this.adicionalEsp + this.cmg + this.sumaFija;
-    if (antiguedad < 0.5) this.sueldoBruto = this.sueldoBruto + this.mdm;
-
-    //Primera Infancia
-    if (this.adicionalExtendida > 0) {this.sueldoBruto = this.sueldoBruto + this.adicionalExtendida;}
-            
-    //para el neto resto los descuentos
-    this.sueldoNeto = this.sueldoBruto + this.descuentoTotal;
-}
-
-
-function Cargo(area,jornada,puntaje = 0,horas = 0,plus = 0,plusEscRecuperacion = 0, plusExclusiva = 0) {
-    this.area = area;
-    this.jornada = jornada;
-    this.puntaje = puntaje;
-    this.horas = horas;
-    this.plus = plus;
-    this.plusEscRecuperacion = plusEscRecuperacion;
-    this.plusExclusiva = plusExclusiva;
-    this.calcular_items = calcular_items;
-    this.calcular_sueldo = calcular_sueldo;
-}
-
-//suma todos los cargos de un docente
-function sumar_cargos() {
-    for (key in items) {
-        let suma = 0;
-        for (cargo of this.cargos) {
-            suma += cargo[key];
-        }
-        if (suma < items[key].tope || items[key].tope == 0) {
-            this[key] = suma;
-        }
-        else {
-            this[key] = items[key].tope;			
-        }		
-    }
-    this.calcular_sueldo();
-}
-
-//calcula el sueldo de un docente con 1 o más cargos
-function calcular_sueldo_docente() {
-    for (cargo of this.cargos) {
-        cargo.calcular_items();
-    }
-    this.sumar_cargos();
-    this.calcular_sueldo();        
-    this.sumar_asignaciones();
-}    
-
-//suma asigaciones segun ley octubre 2021
-function sumar_asignaciones() {
-    let franja;
-    let sueldo = this.sueldoBruto;
-    if (sueldo >= TopesAsignaciones[2]) {
-        for (asignacion in asignaciones) { 
-            this[asignacion] = MontosAsignaciones[asignacion][3]*asignaciones[asignacion]; 
-            items[asignacion].descripcion = "Superaste el tope puesto por la nueva ley. Si venías cobrando de antes, tenés que seguir cobrando el mismo monto"
-        }
-    }
-    else {
-        if (sueldo >= TopesAsignaciones[1])
-            franja = 2;
-        else if (sueldo >= TopesAsignaciones[0])
-            franja = 1;
-        else
-            franja = 0;
-        for (asignacion in asignaciones) {
-            this[asignacion] = MontosAsignaciones[asignacion][franja]*ValorUMAF*asignaciones[asignacion];
-            // if (this.horas < 18) {this[asignacion] = this.asignacion*0.5;}
-            this.sueldoBruto += this[asignacion];
-            this.sueldoNeto += this[asignacion];
-        }
-    }
-}
-
-//muestra un detalle del sueldo
-function detalle() {
-    var detalle = [];
-    for (key in items) {
-        if (key != "minimo" && this[key] != undefined && this[key] != 0) {
-            let item = {nombre: items[key].nombre,monto: Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(this[key]),tipo: items[key].tipo, descripcion: items[key].descripcion}
-            if (this[key] == items[key].tope) {
-                item.max = true;
-            }
-            detalle.push(item);
-        }
-    }
-    return(detalle);
-}
-
-function Docente() {
-    this.cargos = [new Cargo()];      
-    this.calcular_sueldo = calcular_sueldo;
-    this.sumar_cargos = sumar_cargos;
-    this.sumar_asignaciones = sumar_asignaciones;
-    this.calcular_sueldo_docente = calcular_sueldo_docente;
-    this.detalle = detalle;
-}
-
 
 function elegir_area(evt) {	
     var id = evt.target.id;
@@ -424,7 +557,7 @@ function elegir_cargo(evt) {
     else { docente.cargos[n].plus = 0;}	
     
     //Primera infancia
-    if (docente.cargos[n].puntaje == 1368) { docente.cargos[n].adicionalExtendida = valoresJC.AdicionalExtendida}
+    if (docente.cargos[n].puntaje == 1368) { docente.cargos[n].adicionalExtendida = docente.valoresJC.AdicionalExtendida}
     else {docente.cargos[n].adicionalExtendida = 0}
 
     calcular(n);
@@ -591,19 +724,14 @@ function elegir_horas(evt) {
 function elegir_antiguedad() {
     var selectorAntiguedad = document.getElementById("antiguedad");
     antiguedad = Number(selectorAntiguedad.options[selectorAntiguedad.selectedIndex].value);
-    if (antiguedad <= 0.4)	{
-        valoresJC.MDM = valoresJC.MDM0_60; valoresJC.MDMPiso = valoresJC.MDM0_60Piso;
-        items.mdm.tipo = 'nr';
-        items.mdm.descripcion = "Hasta los 6 años antigüedad son $"+valoresJC.MDM/2+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs";
+    if (mes == "") {
+        document.getElementById('bruto').innerHTML = "Seleccionar mes";
+        document.getElementById('neto').innerHTML = "Seleccionar mes";
     }
     else {
-        valoresJC.MDM = valoresJC.MDM70_120; valoresJC.MDMPiso = valoresJC.MDM70_120Piso;
-        items.mdm.tipo = 'r';
-        items.mdm.descripcion = "Desde los 7 años antigüedad son $"+valoresJC.MDM/2+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"
+        docente.fijar_antiguedad(antiguedad);
+        calcular(0);
     }
-    items.mdm.tope = valoresJC.MDM;
-    items.antiguedadDec483.tope = valoresJC.Dec483*antiguedad;
-    calcular(0);
 }
 function elegir_afiliado() {
     if (document.getElementById("afiliado").checked) {
@@ -789,7 +917,7 @@ function agregar_cargo() {
         document.getElementById("botoncargo").innerHTML = "-";
         document.getElementById("textocargo").innerHTML = "Eliminar segundo cargo";
         segundoCargo = true;	
-        docente.cargos.push(new Cargo())
+        docente.cargos.push(new Cargo(docente))
     }
     else {
         document.getElementById("formu1").remove();
@@ -819,10 +947,7 @@ function agregar_asignaciones() {
 
 function elegir_mes(evt) {
     mes = evt.target.value;
-    valoresJC = valor_items[mes]
-    // let valores = valor_items[mes];
-    // for (item in valores)
-    //     valoresJC[item] = valores[item];
-    elegir_antiguedad();
+    docente.valoresJC = valor_items[mes];
+    docente.fijar_antiguedad(antiguedad);
     calcular(0)
 }
