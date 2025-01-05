@@ -274,7 +274,7 @@ var valor_items, mes = "";
 fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems_minuscula.json')
     .then(response => response.json())
     .then(data => {
-        valor_items = data["2024"];
+        valor_items = data;
         var select = document.createElement('select');
         select.setAttribute("class","tdForm");
         select.setAttribute("id","mes");
