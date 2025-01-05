@@ -34,31 +34,29 @@ class Cargo {
 
 class Docente {
     constructor(mes) {
-        this.cargo0 = new Cargo();
-        this.cargos = [this.cargo0];
+        this.cargos = [new Cargo()];
 
-        // if (mes) {
-        //     this.valoresJC = valor_items[mes];
-        //     this.fijar_antiguedad(0);
-        //     this.cargos[0].valoresJC = this.valoresJC;
-        // }
+        if (mes) {
+            this.valoresJC = valor_items[mes];
+            this.fijar_mdm(0);
+        }
     }
 
     //calcula el valor de cada item para el cargo
     calcular_items(cargo) {		
         
         //Valores JC
-        let PuntoIndice = this.valoresJC.PuntoIndice,
-        Dec483 = this.valoresJC.Dec483,
-        Dec483Piso = this.valoresJC.Dec483Piso,
-        SumaFija = this.valoresJC.SumaFija,
-        AdicionalEspecial = this.valoresJC.AdicionalEspecial,
-        FONID = this.valoresJC.FONID,
-        Conectividad = this.valoresJC.Conectividad,
-        SalarioMinimo = this.valoresJC.SalarioMinimo,
-        SalarioMinimoPiso = this.valoresJC.SalarioMinimoPiso,
-        SalarioMinimoPisoJS = this.valoresJC.SalarioMinimoPisoJS,
-        MDM = this.valoresJC.MDM;
+        let PuntoIndice = this.valoresJC.puntoIndice,
+        Dec483 = this.valoresJC.dec483,
+        Dec483Piso = this.valoresJC.dec483Piso,
+        SumaFija = this.valoresJC.sumaFija,
+        AdicionalEspecial = this.valoresJC.adicionalEspecial,
+        FONID = this.valoresJC.fonid,
+        Conectividad = this.valoresJC.conectividad,
+        SalarioMinimo = this.valoresJC.salarioMinimo,
+        SalarioMinimoPiso = this.valoresJC.salarioMinimoPiso,
+        SalarioMinimoPisoJS = this.valoresJC.salarioMinimoPisoJS,
+        MDM = this.valoresJC.mdm;
 
         var proporcion;
             
@@ -71,7 +69,7 @@ class Docente {
             if (proporcion < 1) {
                 if (cargo.dec483*proporcion > Dec483Piso/2) {cargo.dec483 = Dec483/2*proporcion;} else {cargo.dec483 = Dec483Piso/2;}
                 if (cargo.minimo*proporcion > SalarioMinimoPisoJS) {cargo.minimo = SalarioMinimo/2*proporcion;} else {cargo.minimo = SalarioMinimoPisoJS}
-                if (cargo.mdm*proporcion > MDMPiso/2) {cargo.mdm = MDM/2*proporcion;} else {cargo.mdm = valoresJC.MDMPiso/2;}
+                if (cargo.mdm*proporcion > MDMPiso/2) {cargo.mdm = MDM/2*proporcion;} else {cargo.mdm = valoresJC.mdmPiso/2;}
                 cargo.sumaFija = cargo.sumaFija*proporcion;
             }
             if (cargo.horas > 0) {   	   			
@@ -258,16 +256,16 @@ class Docente {
         return(detalle);
     }
 
-    fijar_antiguedad(ant) {
+    fijar_mdm(ant) {
         if (ant <= 0.4)	{
-            this.valoresJC.MDM = this.valoresJC.MDM0_60; this.valoresJC.MDMPiso = this.valoresJC.MDM0_60Piso;
+            this.valoresJC.mdm = this.valoresJC.mdm0_60; this.valoresJC.mdmPiso = this.valoresJC.mdm0_60Piso;
             items.mdm.tipo = 'nr';
-            //items.mdm.descripcion = "Hasta los 6 años antigüedad son $"+this.valoresJC.MDM/2+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs";
+            //items.mdm.descripcion = "Hasta los 6 años antigüedad son $"+this.valoresJC.mdm/2+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs";
         }
         else {
-            this.valoresJC.MDM = this.valoresJC.MDM70_120; this.valoresJC.MDMPiso = this.valoresJC.MDM70_120Piso;
+            this.valoresJC.mdm = this.valoresJC.mdm70_120; this.valoresJC.mdmPiso = this.valoresJC.mdm70_120Piso;
             items.mdm.tipo = 'r';
-            //items.mdm.descripcion = "Desde los 7 años antigüedad son $"+this.valoresJC.MDM/2+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"
+            //items.mdm.descripcion = "Desde los 7 años antigüedad son $"+this.valoresJC.mdm/2+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"
         }
     }
 }
@@ -338,7 +336,7 @@ var items = {
         nombre : "Suma Decreto 483/05",
         tope : true,
         tipo : 'r',
-        //descripcion : "$"+(valoresJC.Dec483/2)+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"
+        //descripcion : "$"+(valoresJC.dec483/2)+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"
     },
     antiguedadDec483 : {
         nombre : "Antigüedad Dec. 483",
@@ -367,31 +365,31 @@ var items = {
         nombre : "Compensación Fija Proporcional",
         tope : true,
         tipo : 'nr',
-        //descripcion :  "$"+(valoresJC.AdicionalEspecial/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
+        //descripcion :  "$"+(valoresJC.adicionalEspecial/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
     },
     fonid : {
         nombre : "Fo.Na.In.Do",
         tope : true,
         tipo : 'nr',
-        //descripcion :  "$"+(valoresJC.FONID/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
+        //descripcion :  "$"+(valoresJC.fonid/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
     },
     conectividad : {
         nombre : "Compensación Transitoria",
         tope : true,
         tipo : 'nr',
-        //descripcion :  "(reemplazó al item Conectividad) $"+(valoresJC.Conectividad/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
+        //descripcion :  "(reemplazó al item Conectividad) $"+(valoresJC.conectividad/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
     },
     sumaFija : {
         nombre : "Suma Fija",
         tope : true,
         tipo : 'nr',
-        //descripcion :  "$"+(valoresJC.SumaFija/2)+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"
+        //descripcion :  "$"+(valoresJC.sumaFija/2)+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs"
     },
     adicionalExtendida : {
         nombre : "Adicional Turno Extendido",
         tope : true,
         tipo : 'nr',
-        //descripcion :  "Adicional de $"+(valoresJC.AdicionalExtendida)+" para el cargo de turno extendido de Primera Infancia"
+        //descripcion :  "Adicional de $"+(valoresJC.adicionalExtendida)+" para el cargo de turno extendido de Primera Infancia"
     },
     supleEscRec : {
         nombre : "Suplemento Esc. Recupración",
@@ -557,7 +555,7 @@ function elegir_cargo(evt) {
     else { docente.cargos[n].plus = 0;}	
     
     //Primera infancia
-    if (docente.cargos[n].puntaje == 1368) { docente.cargos[n].adicionalExtendida = docente.valoresJC.AdicionalExtendida}
+    if (docente.cargos[n].puntaje == 1368) { docente.cargos[n].adicionalExtendida = docente.valoresJC.adicionalExtendida}
     else {docente.cargos[n].adicionalExtendida = 0}
 
     calcular(n);
@@ -729,7 +727,7 @@ function elegir_antiguedad() {
         document.getElementById('neto').innerHTML = "Seleccionar mes";
     }
     else {
-        docente.fijar_antiguedad(antiguedad);
+        docente.fijar_mdm(antiguedad);
         calcular(0);
     }
 }
@@ -948,6 +946,6 @@ function agregar_asignaciones() {
 function elegir_mes(evt) {
     mes = evt.target.value;
     docente.valoresJC = valor_items[mes];
-    docente.fijar_antiguedad(antiguedad);
+    docente.fijar_mdm(antiguedad);
     calcular(0)
 }
