@@ -61,31 +61,31 @@ class Docente {
         var proporcion;
             
         if (cargo.jornada == "JS") {
-            cargo.dec483 = Dec483/2; cargo.fonid = FONID/2; cargo.conectividad = Conectividad/2; cargo.adicionalEsp = AdicionalEspecial/2; cargo.minimo = SalarioMinimo/2; cargo.mdm = MDM/2;
+            cargo.dec483 = Dec483/2; cargo.fonid = FONID/2; cargo.conectividad = Conectividad/2; cargo.adicionalEspecial = AdicionalEspecial/2; cargo.salarioMinimo = SalarioMinimo/2; cargo.mdm = MDM/2;
             cargo.sumaFija = SumaFija/2;
 
             proporcion = cargo.puntaje/1135;
             // si el puntaje es menor a 1135 hago proporcional a menos que quede por debajo del piso
             if (proporcion < 1) {
                 if (cargo.dec483*proporcion > Dec483Piso/2) {cargo.dec483 = Dec483/2*proporcion;} else {cargo.dec483 = Dec483Piso/2;}
-                if (cargo.minimo*proporcion > SalarioMinimoPisoJS) {cargo.minimo = SalarioMinimo/2*proporcion;} else {cargo.minimo = SalarioMinimoPisoJS}
+                if (cargo.salarioMinimo*proporcion > SalarioMinimoPisoJS) {cargo.salarioMinimo = SalarioMinimo/2*proporcion;} else {cargo.salarioMinimo = SalarioMinimoPisoJS}
                 if (cargo.mdm*proporcion > MDMPiso/2) {cargo.mdm = MDM/2*proporcion;} else {cargo.mdm = valoresJC.mdmPiso/2;}
                 cargo.sumaFija = cargo.sumaFija*proporcion;
             }
             if (cargo.horas > 0) {   	   			
-                cargo.adicionalEsp = item_horas(cargo.horas,30,AdicionalEspecial);
+                cargo.adicionalEspecial = item_horas(cargo.horas,30,AdicionalEspecial);
                 cargo.fonid = item_horas(cargo.horas,30,FONID);
                 cargo.conectividad = item_horas(cargo.horas,30,Conectividad);
             }
         }
         else if (cargo.jornada == "JC") {
-            cargo.dec483 = Dec483; cargo.fonid = FONID; cargo.conectividad = Conectividad; cargo.adicionalEsp = AdicionalEspecial; cargo.minimo = SalarioMinimo; cargo.mdm = MDM;
+            cargo.dec483 = Dec483; cargo.fonid = FONID; cargo.conectividad = Conectividad; cargo.adicionalEspecial = AdicionalEspecial; cargo.salarioMinimo = SalarioMinimo; cargo.mdm = MDM;
             cargo.sumaFija = SumaFija;
 
             proporcion = cargo.puntaje/2070;
             if (proporcion < 1) {
                 if (cargo.dec483*proporcion > Dec483Piso) {cargo.dec483 = Dec483*proporcion;} else {cargo.dec483 = Dec483Piso;}
-                if (cargo.minimo*proporcion > SalarioMinimoPiso) {cargo.minimo = SalarioMinimo*proporcion;} else {cargo.minimo = SalarioMinimoPiso;}
+                if (cargo.salarioMinimo*proporcion > SalarioMinimoPiso) {cargo.salarioMinimo = SalarioMinimo*proporcion;} else {cargo.salarioMinimo = SalarioMinimoPiso;}
                 if (cargo.mdm*proporcion > MDMPiso) {cargo.mdm = MDM*proporcion;} else {cargo.mdm = MDMPiso;}
                 cargo.sumaFija = SumaFija*proporcion;
             }
@@ -95,19 +95,19 @@ class Docente {
             cargo.dec483 = item_horas(cargo.horas,38,Dec483);
             cargo.mdm = item_horas(cargo.horas,38,MDM);
             cargo.sumaFija = item_horas(cargo.horas,38,SumaFija);
-            cargo.adicionalEsp = item_horas(cargo.horas,30,AdicionalEspecial);
+            cargo.adicionalEspecial = item_horas(cargo.horas,30,AdicionalEspecial);
             cargo.fonid = item_horas(cargo.horas,30,FONID);
             cargo.conectividad = item_horas(cargo.horas,30,Conectividad);
-            cargo.minimo = item_horas(cargo.horas,40,SalarioMinimo);
+            cargo.salarioMinimo = item_horas(cargo.horas,40,SalarioMinimo);
         }
         else if (cargo.jornada == "HorasT") {
             cargo.dec483 = item_horas(cargo.horas,38,Dec483);
             cargo.mdm = item_horas(cargo.horas,38,MDM);
             cargo.sumaFija = item_horas(cargo.horas,38,SumaFija);
-            cargo.adicionalEsp = item_horas(cargo.horas,24,AdicionalEspecial);
+            cargo.adicionalEspecial = item_horas(cargo.horas,24,AdicionalEspecial);
             cargo.fonid = item_horas(cargo.horas,24,FONID);
             cargo.conectividad = item_horas(cargo.horas,24,Conectividad);
-            cargo.minimo = item_horas(cargo.horas,40,SalarioMinimo);
+            cargo.salarioMinimo = item_horas(cargo.horas,40,SalarioMinimo);
         }
         //basico
         cargo.basico =  cargo.puntaje*PuntoIndice;
@@ -118,7 +118,7 @@ class Docente {
         cargo.supleEscRec = (cargo.basico+cargo.dec483)*cargo.plusEscRecuperacion;
         
         //Jerarquizacion y su proporcional del presentismo no cuentan para cmg
-        // cargo.minimo = cargo.minimo + cargo.jerarquizacion*1.1*Rem;
+        // cargo.salarioMinimo = cargo.salarioMinimo + cargo.jerarquizacion*1.1*Rem;
 
 
         cargo.antiguedadBasico = (cargo.basico + cargo.jerarquizacion + cargo.dedicacionExclusiva)*antiguedad;
@@ -138,7 +138,7 @@ class Docente {
             this.sinCMG = this.sinCMG + this.mdm
             
         //si quedo por debajo del minimo, la diferencia me da el cmg
-        if (this.sinCMG < this.minimo) {this.cmg = this.minimo - this.sinCMG}
+        if (this.sinCMG < this.salarioMinimo) {this.cmg = this.salarioMinimo - this.sinCMG}
         else {this.cmg = 0;}
 
         //calculo adicional salarial por presentismo
@@ -172,7 +172,7 @@ class Docente {
                     + this.descuentoFCompensador + this.descuentoCajaComp + this.descuentoAdemys;	
 
         //para el bruto sumo todo
-        this.sueldoBruto = this.remus + this.fonid + this.conectividad + this.adicionalEsp + this.cmg + this.sumaFija;
+        this.sueldoBruto = this.remus + this.fonid + this.conectividad + this.adicionalEspecial + this.cmg + this.sumaFija;
         if (antiguedad < 0.5) this.sueldoBruto = this.sueldoBruto + this.mdm;
 
         //Primera Infancia
@@ -185,19 +185,22 @@ class Docente {
     //suma todos los cargos de un docente
     sumar_cargos() {
         for (let key in items) {
-            let suma = 0;
-            for (let cargo of this.cargos) {
-                suma += cargo[key];
-            }
-            if (items[key].tope && suma > items[key].tope) {
-                this[key] = this.valoresJC[key];
-            }
-            else {
-                this[key] = suma;
-            }
-            console.log(key, suma, this[key]);
+            //if (items[key].tipo == 'r' || items[key].tipo == 'nr') {
+                let suma = 0;
+                //sumo todos los cargos
+                for (let cargo of this.cargos) {
+                    suma += cargo[key];
+                }
+                //si supera el tope, pongo el tope
+                if (items[key].tope && suma > this.valoresJC[key]) {
+                    this[key] = this.valoresJC[key];
+                }
+                //si no, pongo la suma
+                else {
+                    this[key] = suma;
+                }
+            //}
         }
-        this.calcular_sueldo();
     }
 
     //calcula el sueldo de un docente con 1 o más cargos
@@ -346,7 +349,7 @@ var items = {
     },
     mdm : {
         nombre : "Material Didáctico Mensual",
-        tope : false,
+        tope : true,
         tipo : 'nr',
         //descripcion :  ""
     },
@@ -361,11 +364,11 @@ var items = {
         tipo : 'nr',
         //descripcion :  "Es la diferencia entre lo que sería tu sueldo por antigüedad y el salario mínimo docente"
     },
-    adicionalEsp : {
+    adicionalEspecial : {
         nombre : "Compensación Fija Proporcional",
         tope : true,
         tipo : 'nr',
-        //descripcion :  "$"+(valoresJC.adicionalEspecial/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
+        //descripcion :  "$"+(valoresJC.adicionalEspecialecial/2)+" por cargo simple o 15hs. Se paga hasta dos cargos o 30hs"
     },
     fonid : {
         nombre : "Fo.Na.In.Do",
