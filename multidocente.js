@@ -29,7 +29,11 @@ class Cargo {
         this.plus = plus;
         this.plusEscRecuperacion = plusEscRecuperacion;
         this.plusExclusiva = plusExclusiva;
-    } 
+    }
+
+    clone() {
+        return new Cargo(this.area, this.jornada, this.puntaje, this.horas, this.plus, this.plusEscRecuperacion, this.plusExclusiva);
+    }
 }
 
 class Docente {
@@ -38,7 +42,7 @@ class Docente {
 
         if (mes) {
             this.valoresJC = valor_items[mes];
-            this.fijar_mdm(0);
+            this.fijar_mdm(antiguedad);
         }
     }
 
@@ -56,7 +60,8 @@ class Docente {
         SalarioMinimo = this.valoresJC.salarioMinimo,
         SalarioMinimoPiso = this.valoresJC.salarioMinimoPiso,
         SalarioMinimoPisoJS = this.valoresJC.salarioMinimoPisoJS,
-        MDM = this.valoresJC.mdm;
+        MDM = this.valoresJC.mdm,
+        MDMPiso = this.valoresJC.mdmPiso;
 
         var proporcion;
             
@@ -125,7 +130,7 @@ class Docente {
         cargo.antiguedadDec483 = cargo.dec483*antiguedad
     }
 
-    //calcula el sueldo para un cargo
+    //calcula el sueldo a partir de los items
     calcular_sueldo() {
 
         //sumo las cifras remunerativas
@@ -211,6 +216,8 @@ class Docente {
         this.sumar_cargos();
         this.calcular_sueldo();        
         this.sumar_asignaciones();
+
+        return this.sueldoNeto;
     }    
 
     //suma asigaciones segun ley octubre 2021
