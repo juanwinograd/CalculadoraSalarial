@@ -20,6 +20,27 @@ const MontosAsignaciones = {
             violencia : [366,366,336,0]
 };
 
+var mostrarDetalle = false, segundoCargo = false, mostrarAsignaciones = false;
+var privada = false;
+var asignaciones = {
+            embarazo : 0,
+            conviviente : 0,
+            hijo : 0,
+            hijoDiscapacidad : 0
+};
+
+//Calcula cuanto cobras de un item por hs horas cátedra
+function item_horas(hs, maxHoras, tope) {
+    var item;
+    if (hs < maxHoras) { 
+        item = tope/maxHoras*hs; 
+    }
+    else {
+        item = tope;
+    }
+    return(item);
+}
+
 class Cargo {
     constructor(area, jornada, puntaje = 0, horas = 0, plus = 0, plusEscRecuperacion = 0, plusExclusiva = 0) {
         this.area = area;
@@ -37,14 +58,32 @@ class Cargo {
 }
 
 class Docente {
-    constructor(mes) {
+    constructor(mes, antiguedad) {
         this.cargos = [new Cargo()];
 
-        if (mes) {
-            this.valoresJC = valor_items[mes];
-            this.fijar_mdm(antiguedad);
+        if (mes) this.fijar_valoresJC(mes, antiguedad);
+    }
+
+    fijar_valoresJC(mes,antiguedad) {
+        this.mes = mes;
+        this.valoresJC = valor_items[mes];
+        if (antiguedad != undefined) {
+            this.antiguedad = antiguedad;
+            this.fijar_mdm();
         }
     }
+
+    clone(mes) {
+        var docente = new Docente(mes,this.antiguedad);
+        docente.antiguedad = this.antiguedad;
+        docente.cargos = [];
+        for (let cargo of this.cargos) {
+            docente.cargos.push(cargo.clone());
+        }
+        docente.calcular_sueldo_docente();
+        return docente;
+    }
+
 
     //calcula el valor de cada item para el cargo
     calcular_items(cargo) {		
@@ -126,8 +165,8 @@ class Docente {
         // cargo.salarioMinimo = cargo.salarioMinimo + cargo.jerarquizacion*1.1*Rem;
 
 
-        cargo.antiguedadBasico = (cargo.basico + cargo.jerarquizacion + cargo.dedicacionExclusiva)*antiguedad;
-        cargo.antiguedadDec483 = cargo.dec483*antiguedad
+        cargo.antiguedadBasico = (cargo.basico + cargo.jerarquizacion + cargo.dedicacionExclusiva)*this.antiguedad;
+        cargo.antiguedadDec483 = cargo.dec483*this.antiguedad
     }
 
     //calcula el sueldo a partir de los items
@@ -137,7 +176,7 @@ class Docente {
         this.sinCMG = (this.basico*1.1 + this.dec483*1.1 + this.antiguedadBasico + this.antiguedadDec483 + this.supleEscRec)*Rem;
 
         //segun antiguedad mdm es remunerativo o no
-        if (antiguedad >= 0.5)
+        if (this.antiguedad >= 0.5)
             this.sinCMG = this.sinCMG + this.mdm*Rem;
         else
             this.sinCMG = this.sinCMG + this.mdm
@@ -159,7 +198,7 @@ class Docente {
         // sumo todo lo remunerativo
         this.remus = this.basico + this.dec483 + this.jerarquizacion + this.dedicacionExclusiva
                     + this.presentismo + this.antiguedadBasico + this.antiguedadDec483 + this.supleEscRec;
-        if (antiguedad >= 0.5) this.remus = this.remus + this.mdm;
+        if (this.antiguedad >= 0.5) this.remus = this.remus + this.mdm;
 
         // descuentos
         this.descuentoOS = -this.remus*DescuentoOS;
@@ -178,7 +217,7 @@ class Docente {
 
         //para el bruto sumo todo
         this.sueldoBruto = this.remus + this.fonid + this.conectividad + this.adicionalEspecial + this.cmg + this.sumaFija;
-        if (antiguedad < 0.5) this.sueldoBruto = this.sueldoBruto + this.mdm;
+        if (this.antiguedad < 0.5) this.sueldoBruto = this.sueldoBruto + this.mdm;
 
         //Primera Infancia
         if (this.adicionalExtendida > 0) {this.sueldoBruto = this.sueldoBruto + this.adicionalExtendida;}
@@ -266,8 +305,8 @@ class Docente {
         return(detalle);
     }
 
-    fijar_mdm(ant) {
-        if (ant <= 0.4)	{
+    fijar_mdm() {
+        if (this.antiguedad <= 0.4)	{
             this.valoresJC.mdm = this.valoresJC.mdm0_60; this.valoresJC.mdmPiso = this.valoresJC.mdm0_60Piso;
             items.mdm.tipo = 'nr';
             //items.mdm.descripcion = "Hasta los 6 años antigüedad son $"+this.valoresJC.mdm/2+" por cargo simple o 19hs. Se paga hasta dos cargos o 38hs";
@@ -279,6 +318,8 @@ class Docente {
         }
     }
 }
+
+var docente = new Docente();
 
 var valor_items, mes = "";
 fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems_minuscula.json')
@@ -300,6 +341,9 @@ fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/val
         };
         document.getElementById("contenedor-mes").appendChild(select);
         select.setAttribute("onchange","elegir_mes(event)");
+
+        //fijo el mes en el que se carga la página
+        docente.fijar_valoresJC("Diciembre");
     })
     .catch(error => console.error('Error loading JSON:', error));
     
@@ -473,29 +517,6 @@ var items = {
         tope : false,
         tipo : 'a'}
 };
-
-var mostrarDetalle = false, segundoCargo = false, mostrarAsignaciones = false;
-var privada = false;
-var antiguedad = -1; //esto podría ser una propiedad del docente. pensar
-var asignaciones = {
-            embarazo : 0,
-            conviviente : 0,
-            hijo : 0,
-            hijoDiscapacidad : 0
-};
-var docente = new Docente();
-
-//Calcula cuanto cobras de un item por hs horas cátedra
-function item_horas(hs, maxHoras, tope) {
-    var item;
-    if (hs < maxHoras) { 
-        item = tope/maxHoras*hs; 
-    }
-    else {
-        item = tope;
-    }
-    return(item);
-}
 
 function elegir_area(evt) {	
     var id = evt.target.id;
@@ -731,13 +752,13 @@ function elegir_horas(evt) {
 }
 function elegir_antiguedad() {
     var selectorAntiguedad = document.getElementById("antiguedad");
-    antiguedad = Number(selectorAntiguedad.options[selectorAntiguedad.selectedIndex].value);
-    if (mes == "") {
+    docente.antiguedad = Number(selectorAntiguedad.options[selectorAntiguedad.selectedIndex].value);
+    if (docente.mes == "") {
         document.getElementById('bruto').innerHTML = "Seleccionar mes";
         document.getElementById('neto').innerHTML = "Seleccionar mes";
     }
     else {
-        docente.fijar_mdm(antiguedad);
+        docente.fijar_mdm();
         calcular(0);
     }
 }
@@ -799,7 +820,7 @@ function calcular(n) {
         document.getElementById('bruto').innerHTML = "Seleccionar cargo";
         document.getElementById('neto').innerHTML = "Seleccionar cargo";
                 }
-    else if (antiguedad == -1 )	{
+    else if (docente.antiguedad === undefined) {
         document.getElementById('bruto').innerHTML = "Seleccionar antigüedad";
         document.getElementById('neto').innerHTML = "Seleccionar antigüedad";
                 }
@@ -807,7 +828,7 @@ function calcular(n) {
         document.getElementById('bruto').innerHTML = "Seleccionar segundo cargo";
         document.getElementById('neto').innerHTML = "Seleccionar segundo cargo";
                 }
-    else if (mes == "") {
+    else if (docente.mes == "") {
         document.getElementById('bruto').innerHTML = "Seleccionar mes";
         document.getElementById('neto').innerHTML = "Seleccionar mes";
                 }
@@ -886,7 +907,7 @@ function activar_detalle() {
         var divDetalle = document.createElement("div");
         divDetalle.setAttribute("id","detalle");
         divDetalle.setAttribute("class","detalle");
-        document.body.appendChild(divDetalle);
+        document.getElementById("calculadora").appendChild(divDetalle);
         mostrar_detalle()
         mostrarDetalle = true;
         document.getElementById("botondetalle").innerHTML = "Ocultar detalle"
@@ -956,6 +977,6 @@ function agregar_asignaciones() {
 function elegir_mes(evt) {
     mes = evt.target.value;
     docente.valoresJC = valor_items[mes];
-    docente.fijar_mdm(antiguedad);
+    docente.fijar_mdm();
     calcular(0)
 }

@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Salarial</title>
     <style>
         body {
             font-family: Roboto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
         }
         .tdForm {				
             font-size: 20px;
@@ -14,7 +20,7 @@
             box-shadow: 0 0 11px #0000001a;
             height: 40px;
             font-size: 20px;
-            text-indent: 10px;
+            text-indent: 2px;
             color: 333;
             cursor: pointer;
             margin: 20px 0;
@@ -73,10 +79,7 @@
             font-size: 20px;
             font-weight: normal;
             line-height: 150%;
-        }/*
-        dt {
-            font-weight: bold;
-        }*/
+        }
         dd {
             font-size: 16px;
             font-style: italic;
@@ -96,11 +99,18 @@
             padding: 10px 20px;
             display: none;
         }
+        #calculadora, #perdida {
+            margin: 20px;
+            border: 2px solid #000;
+            padding: 20px;
+        }
     </style>
     
 </head>
 <body>
-    <div id="contenedor-mes"></div>
+    <div id="calculadora">
+        <h1>Calculadora de sueldo docente</h1>
+        <p>Ingrese los datos correspondientes para calcular el sueldo docente.</p>
     <form class="tdForm" id="formu0" onsubmit="mostrar(event)">
 
         <select id="privada" onchange="elegir_privada()">
@@ -281,6 +291,13 @@
     </div>
     <br>
     <button type="button" id="botondetalle" onclick="activar_detalle()">Mostrar detalle</button>	
+</div>
+
+    <div id="perdida">
+        <h1>Cálculo de caída salarial</h1>
+        <p>Aquí puede agregar información adicional relevante.</p>
+        <form id="contenedor-mes" class="tdForm"></form>
+    </div>  
 
     <script src="multidocente.js"></script>
 </body>
