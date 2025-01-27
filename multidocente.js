@@ -1,4 +1,4 @@
-const MES_ACTUAL = "dic-24";
+const MES_ACTUAL = "diciembre 2024";
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
 var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
 var DescuentoAdemys = 0, DescuentoPresentismo = 0;
@@ -975,30 +975,26 @@ function agregar_asignaciones() {
     }
 }
 
-function inflacion_acumulada(mes) {
-    return ipc[MES_ACTUAL].value/ipc[mes].value;    
-}
-
 
 function elegir_mes(evt) {
     mes = evt.target.value;
-    var inflacion = inflacion_acumulada(mes);
+    var inflacion = ipc[MES_ACTUAL]/ipc[mes];
     var docente_ = docente.clone(mes);
     var sueldoInflacionado = docente_.sueldoNeto*inflacion;
     var perdida = -1+docente.sueldoNeto/sueldoInflacionado;
 
     var p1 = document.createElement('p');
-    p1.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+" fue de <span style='color:red; font-weight:bold;'>"+((inflacion.toFixed(2)-1)*100)+"%</span>";
-    document.getElementById("contenedor-mes").appendChild(p1);
+    p1.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+" fue de <span style='color:red; font-weight:bold;'>"+((inflacion-1)*100).toFixed(1)+"%</span>";
+    document.getElementById("resultado-perdida").appendChild(p1);
 
     var p2 = document.createElement('p');
     p2.innerHTML =  "En "+mes+" por el mismo trabajo cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
     ". De haberse actualizado tu sueldo siguiendo la inflación ahora <b> deberías cobrar "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
-    document.getElementById("contenedor-mes").appendChild(p2);
+    document.getElementById("resultado-perdida").appendChild(p2);
 
     var p3 = document.createElement('p');
-    p3.innerHTML =  "Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+perdida.toFixed(2)*100+"%</span> desde "+mes;
-    document.getElementById("contenedor-mes").appendChild(p3);
+    p3.innerHTML =  "Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span> desde "+mes;
+    document.getElementById("resultado-perdida").appendChild(p3);
 
 
     // docente.valoresJC = valor_items[mes];
