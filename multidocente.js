@@ -988,7 +988,7 @@ function elegir_mes(evt) {
     document.getElementById("resultado-perdida").appendChild(p1);
 
     var p2 = document.createElement('p');
-    p2.innerHTML =  "En "+mes+" por el mismo trabajo cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
+    p2.innerHTML =  "En "+mes+" por el mismo cargo cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
     ". De haberse actualizado tu sueldo siguiendo la inflación ahora <b> deberías cobrar "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
     document.getElementById("resultado-perdida").appendChild(p2);
 
