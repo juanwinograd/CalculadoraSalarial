@@ -59,19 +59,19 @@ class Cargo {
 }
 
 class Docente {
-    constructor(mes, antiguedad) {
+    constructor(mes, antiguedad = -1) {
+        this.antiguedad = antiguedad;
         this.cargos = [new Cargo()];
 
         if (mes) this.fijar_valoresJC(mes, antiguedad);
+
+        this.calculado = false;
     }
 
     fijar_valoresJC(mes,antiguedad) {
         this.mes = mes;
         this.valoresJC = valor_items[mes];
-        if (antiguedad != undefined) {
-            this.antiguedad = antiguedad;
-            this.fijar_mdm();
-        }
+        if (antiguedad != -1) {  this.fijar_mdm(); }
     }
 
     clone(mes) {
@@ -84,7 +84,6 @@ class Docente {
         docente.calcular_sueldo_docente();
         return docente;
     }
-
 
     //calcula el valor de cada item para el cargo
     calcular_items(cargo) {		
@@ -256,6 +255,8 @@ class Docente {
         this.sumar_cargos();
         this.calcular_sueldo();        
         this.sumar_asignaciones();
+
+        this.calculado = true;
 
         return this.sueldoNeto;
     }    
@@ -522,8 +523,10 @@ var items = {
 function elegir_area(evt) {	
     var id = evt.target.id;
     var n = id[id.length-1];
+    //reseteo los valores
     docente.cargos[n].puntaje = 0; docente.cargos[n].horas = 0; docente.cargos[n].plus = 0; docente.cargos[n].plusEscRecuperacion = 0;
     docente.cargos[n].adicionalExtendida = 0; docente.cargos[n].plusExclusiva = 0;
+    docente.calculado = false;
     var selectorArea = document.getElementById(id);
     docente.cargos[n].area = selectorArea.options[selectorArea.selectedIndex].value;
     if (docente.cargos[n].area == "horas") { 
@@ -545,6 +548,7 @@ function elegir_jornada(evt) {
     var id = evt.target.id;
     var n = id[id.length-1];
     var selectorJornada = document.getElementById(id);
+    docente.calculado = false;
     docente.cargos[n].jornada = selectorJornada.options[selectorJornada.selectedIndex].value;
     for (opt of selectorJornada) {
         if (opt.index != selectorJornada.selectedIndex) {
@@ -560,6 +564,7 @@ function elegir_jornada(evt) {
         document.getElementById(docente.cargos[n].jornada+n).style.display = "inline";
         document.getElementById(docente.cargos[n].jornada+n).options[0].selected = true;	
     }
+    if (mes) {mostrar_caida(mes);}
 }
 function elegir_supervisor(evt) {
     var id = evt.target.id;
@@ -821,7 +826,7 @@ function calcular(n) {
         document.getElementById('bruto').innerHTML = "Seleccionar cargo";
         document.getElementById('neto').innerHTML = "Seleccionar cargo";
                 }
-    else if (docente.antiguedad === undefined) {
+    else if (docente.antiguedad == -1) {
         document.getElementById('bruto').innerHTML = "Seleccionar antigüedad";
         document.getElementById('neto').innerHTML = "Seleccionar antigüedad";
                 }
@@ -829,18 +834,20 @@ function calcular(n) {
         document.getElementById('bruto').innerHTML = "Seleccionar segundo cargo";
         document.getElementById('neto').innerHTML = "Seleccionar segundo cargo";
                 }
-    else if (docente.mes == "") {
-        document.getElementById('bruto').innerHTML = "Seleccionar mes";
-        document.getElementById('neto').innerHTML = "Seleccionar mes";
-                }
+    // else if (docente.mes == "") {
+    //     document.getElementById('bruto').innerHTML = "Seleccionar mes";
+    //     document.getElementById('neto').innerHTML = "Seleccionar mes";
+    //             }
     else {
         docente.calcular_sueldo_docente();
         document.getElementById('bruto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoBruto);	
         document.getElementById('neto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoNeto);
-        if (mostrarDetalle == true) {
-            mostrar_detalle();
-        }
+
+        //Si está activado el detalle lo muestro
+        if (mostrarDetalle == true) {            mostrar_detalle();        }
     }
+    //Si hay un mes seleccionado muestro la caida
+    if (mes != "") {mostrar_caida(mes);}
 }
 function mostrar(event) {
     event.preventDefault();
@@ -977,27 +984,41 @@ function agregar_asignaciones() {
 
 
 function elegir_mes(evt) {
+    
     mes = evt.target.value;
-    var inflacion = ipc[MES_ACTUAL]/ipc[mes];
-    var docente_ = docente.clone(mes);
-    var sueldoInflacionado = docente_.sueldoNeto*inflacion;
-    var perdida = -1+docente.sueldoNeto/sueldoInflacionado;
+    mostrar_caida(mes);
+    // docente.valoresJC = valor_items[mes];
+    // docente.fijar_mdm();
+    // calcular(0);
+}
 
+function mostrar_caida(mes) {
+    //borro lo que había
+    var resultadoPerdida = document.getElementById("resultado-perdida");
+    while (resultadoPerdida.firstChild) resultadoPerdida.removeChild(resultadoPerdida.firstChild);
+    
+    var inflacion = ipc[MES_ACTUAL]/ipc[mes];
     var p1 = document.createElement('p');
     p1.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+" fue de <span style='color:red; font-weight:bold;'>"+((inflacion-1)*100).toFixed(1)+"%</span>";
     document.getElementById("resultado-perdida").appendChild(p1);
 
-    var p2 = document.createElement('p');
-    p2.innerHTML =  "En "+mes+" por el mismo cargo cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
-    ". De haberse actualizado tu sueldo siguiendo la inflación ahora <b> deberías cobrar "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
-    document.getElementById("resultado-perdida").appendChild(p2);
+    if (docente.calculado) {
+        var docente_ = docente.clone(mes);
+        var sueldoInflacionado = docente_.sueldoNeto*inflacion;
+        var perdida = -1+docente.sueldoNeto/sueldoInflacionado;
 
-    var p3 = document.createElement('p');
-    p3.innerHTML =  "Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span> desde "+mes;
-    document.getElementById("resultado-perdida").appendChild(p3);
+        var p2 = document.createElement('p');
+        p2.innerHTML =  "En "+mes+" por el mismo cargo cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
+        ". De haberse actualizado tu sueldo siguiendo la inflación ahora <b> deberías cobrar "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
+        document.getElementById("resultado-perdida").appendChild(p2);
 
-
-    // docente.valoresJC = valor_items[mes];
-    // docente.fijar_mdm();
-    // calcular(0);
+        var p3 = document.createElement('p');
+        p3.innerHTML =  "Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span> desde "+mes;
+        document.getElementById("resultado-perdida").appendChild(p3);
+    }
+    else {
+        var p2 = document.createElement('p');
+        p2.innerHTML =  "<span style='color:grey;'>Para calcular la caída salarial primero debes ingresar tus datos</span>";
+        document.getElementById("resultado-perdida").appendChild(p2);
+    }
 }
