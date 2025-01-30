@@ -1020,7 +1020,7 @@ function mostrar_caida(mes) {
     }
     else {
         var p2 = document.createElement('p');
-        p2.innerHTML =  "<span style='color:grey;'>Para calcular la caída salarial primero debes ingresar tus datos</span>";
+        p2.innerHTML =  "<span style='color:grey;'>Para calcular la caída salarial, ingresá tus cargos</span>";
         document.getElementById("resultado-perdida").appendChild(p2);
     }
 }
