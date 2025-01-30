@@ -113,7 +113,7 @@ class Docente {
             if (proporcion < 1) {
                 if (cargo.dec483*proporcion > Dec483Piso/2) {cargo.dec483 = Dec483/2*proporcion;} else {cargo.dec483 = Dec483Piso/2;}
                 if (cargo.salarioMinimo*proporcion > SalarioMinimoPisoJS) {cargo.salarioMinimo = SalarioMinimo/2*proporcion;} else {cargo.salarioMinimo = SalarioMinimoPisoJS}
-                if (cargo.mdm*proporcion > MDMPiso/2) {cargo.mdm = MDM/2*proporcion;} else {cargo.mdm = valoresJC.mdmPiso/2;}
+                if (cargo.mdm*proporcion > MDMPiso/2) {cargo.mdm = MDM/2*proporcion;} else {cargo.mdm = MDMPiso/2;}
                 cargo.sumaFija = cargo.sumaFija*proporcion;
             }
             if (cargo.horas > 0) {   	   			
@@ -266,8 +266,8 @@ class Docente {
         let franja;
         let sueldo = this.sueldoBruto;
         if (sueldo >= TopesAsignaciones[2]) {
-            for (asignacion in this.asignaciones) { 
-                this[asignacion] = MontosAsignaciones[asignacion][3]*this.asignaciones[asignacion]; 
+            for (let asignacion in asignaciones) { 
+                this[asignacion] = MontosAsignaciones[asignacion][3]*asignaciones[asignacion]; 
                 items[asignacion].descripcion = "Superaste el tope puesto por la nueva ley. Si venías cobrando de antes, tenés que seguir cobrando el mismo monto"
             }
         }
@@ -278,8 +278,8 @@ class Docente {
                 franja = 1;
             else
                 franja = 0;
-            for (asignacion in this.asignaciones) {
-                this[asignacion] = MontosAsignaciones[asignacion][franja]*ValorUMAF*this.asignaciones[asignacion];
+            for (let asignacion in asignaciones) {
+                this[asignacion] = MontosAsignaciones[asignacion][franja]*ValorUMAF*asignaciones[asignacion];
                 // if (this.horas < 18) {this[asignacion] = this.asignacion*0.5;}
                 this.sueldoBruto += this[asignacion];
                 this.sueldoNeto += this[asignacion];
@@ -808,7 +808,7 @@ function elegir_asignaciones() {
         }
     }
     for (id of ["hijo","hijoDiscapacidad"]) {
-        asignaciones[id] = document.getElementById(id).value;
+        asignaciones[id] = Number(document.getElementById(id).value);
     }
     calcular(0);
 }
@@ -949,8 +949,10 @@ function agregar_cargo() {
         var p = document.createElement('p');
         p.setAttribute("id","leyenda");
         p.innerText = "*Se muestra el total que deberías cobrar por la suma de los cargos teniendo en cuenta los topes. Como se distribuyen los montos entre los distintos recibos puede variar.";
-        document.body.insertBefore(p,document.getElementById("botondetalle"));
-        document.body.insertBefore(formu,document.getElementById("botonasignaciones"));
+
+        var calculadora = document.getElementById("calculadora");
+        calculadora.insertBefore(p,document.getElementById("botondetalle"));
+        calculadora.insertBefore(formu,document.getElementById("botonasignaciones"));
         document.getElementById("botoncargo").innerHTML = "-";
         document.getElementById("textocargo").innerHTML = "Eliminar segundo cargo";
         segundoCargo = true;	
@@ -1008,7 +1010,7 @@ function mostrar_caida(mes) {
         var perdida = -1+docente.sueldoNeto/sueldoInflacionado;
 
         var p2 = document.createElement('p');
-        p2.innerHTML =  "En "+mes+" por el mismo cargo cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
+        p2.innerHTML =  "En "+mes+" por los mismos cargo cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
         ". De haberse actualizado tu sueldo siguiendo la inflación ahora <b> deberías cobrar "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
         document.getElementById("resultado-perdida").appendChild(p2);
 
