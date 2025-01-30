@@ -948,11 +948,11 @@ function agregar_cargo() {
         )
         var p = document.createElement('p');
         p.setAttribute("id","leyenda");
-        p.innerText = "*Se muestra el total que deberías cobrar por la suma de los cargos teniendo en cuenta los topes. Como se distribuyen los montos entre los distintos recibos puede variar.";
+        p.innerText = "*Se muestra el total que deberías cobrar por la suma de los cargos teniendo en cuenta los topes.";
 
         var calculadora = document.getElementById("calculadora");
         calculadora.insertBefore(p,document.getElementById("botondetalle"));
-        calculadora.insertBefore(formu,document.getElementById("botonasignaciones"));
+        calculadora.insertBefore(formu,document.getElementById("resultado"));
         document.getElementById("botoncargo").innerHTML = "-";
         document.getElementById("textocargo").innerHTML = "Eliminar segundo cargo";
         segundoCargo = true;	
@@ -1001,7 +1001,7 @@ function mostrar_caida(mes) {
     
     var inflacion = ipc[MES_ACTUAL]/ipc[mes];
     var p1 = document.createElement('p');
-    p1.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+" fue de <span style='color:red; font-weight:bold;'>"+((inflacion-1)*100).toFixed(1)+"%</span>";
+    p1.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+" fue de <span style='color:red; font-weight:bold;'>"+((inflacion-1)*100).toFixed(1)+"%</span>*";
     document.getElementById("resultado-perdida").appendChild(p1);
 
     if (docente.calculado) {
@@ -1023,4 +1023,8 @@ function mostrar_caida(mes) {
         p2.innerHTML =  "<span style='color:grey;'>Para calcular la caída salarial, ingresá tus cargos</span>";
         document.getElementById("resultado-perdida").appendChild(p2);
     }
+    var p4 = document.createElement('p');
+    p4.innerHTML =  "*Fuente: Instituto de Estadística y Censos de la Ciudad de Buenos Aires";
+    p4.style.fontSize = "small";
+    document.getElementById("resultado-perdida").appendChild(p4);
 }
