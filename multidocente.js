@@ -279,7 +279,7 @@ class Docente {
             else
                 franja = 0;
             for (let asignacion in asignaciones) {
-                this[asignacion] = MontosAsignaciones[asignacion][franja]*asignaciones[asignacion]*this.valoresJC["ValorUMAF"];
+                this[asignacion] = MontosAsignaciones[asignacion][franja]*asignaciones[asignacion]*this.valoresJC["valorUMAF"];
                 // if (this.horas < 18) {this[asignacion] = this.asignacion*0.5;}
                 this.sueldoBruto += this[asignacion];
                 this.sueldoNeto += this[asignacion];
