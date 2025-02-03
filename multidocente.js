@@ -3,9 +3,9 @@ const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.
 var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
 var DescuentoAdemys = 0, DescuentoPresentismo = 0;
 
-const AumentoAsignaciones = 1.2375*1.25625*1.5641*1.5*1.8666667*1.68;
-const ValorUMAF = 50*AumentoAsignaciones;
-const TopesAsignaciones = [60000*AumentoAsignaciones,87500*AumentoAsignaciones,114500*AumentoAsignaciones];
+// const AumentoAsignaciones = 1.2375*1.25625*1.5641*1.5*1.8666667*1.68;
+// const ValorUMAF = 50*AumentoAsignaciones;
+const TopesAsignaciones = [60000,87500,114500];
 const MontosAsignaciones = { 
             matrimonio : [158,158,158,1000],
             nacimiento : [106,106,106,1000],
@@ -265,21 +265,21 @@ class Docente {
     sumar_asignaciones() {
         let franja;
         let sueldo = this.sueldoBruto;
-        if (sueldo >= TopesAsignaciones[2]) {
+        if (sueldo >= TopesAsignaciones[2]*this.valoresJC["valorUMAF"]) {
             for (let asignacion in asignaciones) { 
                 this[asignacion] = MontosAsignaciones[asignacion][3]*asignaciones[asignacion]; 
                 items[asignacion].descripcion = "Superaste el tope puesto por la nueva ley. Si venías cobrando de antes, tenés que seguir cobrando el mismo monto"
             }
         }
         else {
-            if (sueldo >= TopesAsignaciones[1])
+            if (sueldo >= TopesAsignaciones[1]*this.valoresJC["valorUMAF"])
                 franja = 2;
-            else if (sueldo >= TopesAsignaciones[0])
+            else if (sueldo >= TopesAsignaciones[0]*this.valoresJC["valorUMAF"])
                 franja = 1;
             else
                 franja = 0;
             for (let asignacion in asignaciones) {
-                this[asignacion] = MontosAsignaciones[asignacion][franja]*ValorUMAF*asignaciones[asignacion];
+                this[asignacion] = MontosAsignaciones[asignacion][franja]*asignaciones[asignacion]*this.valoresJC["ValorUMAF"];
                 // if (this.horas < 18) {this[asignacion] = this.asignacion*0.5;}
                 this.sueldoBruto += this[asignacion];
                 this.sueldoNeto += this[asignacion];

@@ -14,7 +14,8 @@
     "mdm70_120Piso": 159518,
     "salarioMinimo": 543030,
     "salarioMinimoPiso": 431518,
-    "salarioMinimoPisoJS": 165941
+    "salarioMinimoPisoJS": 165941,
+    "valorUMAF": 121.5782262
   },
   "enero 2024": {
     "puntoIndice": 84.4249,
@@ -31,7 +32,8 @@
     "mdm70_120Piso": 175470,
     "salarioMinimo": 609052,
     "salarioMinimoPiso": 486388,
-    "salarioMinimoPisoJS": 188395
+    "salarioMinimoPisoJS": 188395,
+    "valorUMAF": 182.3673393
   },
   "febrero 2024": {
     "puntoIndice": 96.7049,
@@ -48,7 +50,8 @@
     "mdm70_120Piso": 200994,
     "salarioMinimo": 711932,
     "salarioMinimoPiso": 571425,
-    "salarioMinimoPisoJS": 222943
+    "salarioMinimoPisoJS": 222943,
+    "valorUMAF": 182.3673393
   },
   "marzo 2024": {
     "puntoIndice": 107.4499,
@@ -65,7 +68,8 @@
     "mdm70_120Piso": 223328,
     "salarioMinimo": 798738,
     "salarioMinimoPiso": 642618,
-    "salarioMinimoPisoJS": 251565
+    "salarioMinimoPisoJS": 251565,
+    "valorUMAF": 182.3673393
   },
   "abril 2024": {
     "puntoIndice": 118.1949,
@@ -82,7 +86,8 @@
     "mdm70_120Piso": 245662,
     "salarioMinimo": 886312,
     "salarioMinimoPiso": 714580,
-    "salarioMinimoPisoJS": 280572
+    "salarioMinimoPisoJS": 280572,
+    "valorUMAF": 182.3673393
   },
   "mayo 2024": {
     "puntoIndice": 124.642,
@@ -99,7 +104,8 @@
     "mdm70_120Piso": 259062,
     "salarioMinimo": 938858,
     "salarioMinimoPiso": 757758,
-    "salarioMinimoPisoJS": 297976
+    "salarioMinimoPisoJS": 297976,
+    "valorUMAF": 182.3673393
   },
   "junio 2024": {
     "puntoIndice": 128.94,
@@ -116,7 +122,8 @@
     "mdm70_120Piso": 267996,
     "salarioMinimo": 973888,
     "salarioMinimoPiso": 786543,
-    "salarioMinimoPisoJS": 309579
+    "salarioMinimoPisoJS": 309579,
+    "valorUMAF": 182.3673393
   },
   "julio 2024": {
     "puntoIndice": 134.3125,
@@ -133,7 +140,8 @@
     "mdm70_120Piso": 279164,
     "salarioMinimo": 1017676,
     "salarioMinimoPiso": 822524,
-    "salarioMinimoPisoJS": 324083
+    "salarioMinimoPisoJS": 324083,
+    "valorUMAF": 340.4190394
   },
   "agosto 2024": {
     "puntoIndice": 139.4701,
@@ -150,7 +158,8 @@
     "mdm70_120Piso": 289884,
     "salarioMinimo": 1059716,
     "salarioMinimoPiso": 857066,
-    "salarioMinimoPisoJS": 338007
+    "salarioMinimoPisoJS": 338007,
+    "valorUMAF": 340.4190394
   },
   "septiembre 2024": {
     "puntoIndice": 143.3383,
@@ -167,7 +176,8 @@
     "mdm70_120Piso": 297924,
     "salarioMinimo": 1091240,
     "salarioMinimoPiso": 882973,
-    "salarioMinimoPisoJS": 348450
+    "salarioMinimoPisoJS": 348450,
+    "valorUMAF": 340.4190394
   },
   "octubre 2024": {
     "puntoIndice": 149.79,
@@ -184,7 +194,8 @@
     "mdm70_120Piso": 311324,
     "salarioMinimo": 1143786,
     "salarioMinimoPiso": 926151,
-    "salarioMinimoPisoJS": 385854
+    "salarioMinimoPisoJS": 385854,
+    "valorUMAF": 340.4190394
   },
   "noviembre 2024": {
     "puntoIndice": 153.66,
@@ -201,7 +212,8 @@
     "mdm70_120Piso": 319364,
     "salarioMinimo": 1184314,
     "salarioMinimoPiso": 961058,
-    "salarioMinimoPisoJS": 380797
+    "salarioMinimoPisoJS": 380797,
+    "valorUMAF": 340.4190394
   },
   "diciembre 2024": {
     "puntoIndice": 157.53,
@@ -218,6 +230,7 @@
     "mdm70_120Piso": 327404,
     "salarioMinimo": 1215842,
     "salarioMinimoPiso": 986643,
-    "salarioMinimoPisoJS": 391240
+    "salarioMinimoPisoJS": 391240,
+    "valorUMAF": 571.9039861
   }
 }
