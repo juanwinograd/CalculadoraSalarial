@@ -1,4 +1,4 @@
-const MES_ACTUAL = "diciembre 2024";
+const MES_ACTUAL = "enero 2025";
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
 var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
 var DescuentoAdemys = 0, DescuentoPresentismo = 0;
