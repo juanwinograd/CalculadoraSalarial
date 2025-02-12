@@ -1,4 +1,4 @@
-const MES_ACTUAL = "enero 2025";
+const MES_ACTUAL = "diciembre 2024";
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
 var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
 var DescuentoAdemys = 0, DescuentoPresentismo = 0;
@@ -988,7 +988,11 @@ function agregar_asignaciones() {
 function elegir_mes(evt) {
     
     mes = evt.target.value;
-    mostrar_caida(mes);
+    if (mes) {mostrar_caida(mes);}
+    else {
+        var resultadoPerdida = document.getElementById("resultado-perdida");
+        while (resultadoPerdida.firstChild) resultadoPerdida.removeChild(resultadoPerdida.firstChild);
+    }
     // docente.valoresJC = valor_items[mes];
     // docente.fijar_mdm();
     // calcular(0);
@@ -1010,7 +1014,7 @@ function mostrar_caida(mes) {
         var perdida = -1+docente.sueldoNeto/sueldoInflacionado;
 
         var p2 = document.createElement('p');
-        p2.innerHTML =  "En "+mes+" por los mismos cargo cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
+        p2.innerHTML =  "En "+mes+" por los mismos cargos cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
         ". De haberse actualizado tu sueldo siguiendo la inflación ahora <b> deberías cobrar "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
         document.getElementById("resultado-perdida").appendChild(p2);
 
