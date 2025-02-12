@@ -1020,7 +1020,8 @@ function mostrar_caida(mes) {
         document.getElementById("resultado-perdida").appendChild(p2);
 
         var p3 = document.createElement('p');
-        p3.innerHTML =  "Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span>.";
+        p3.innerHTML =  "Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span>."+
+        " A valores de hoy son "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado-docente.sueldoNeto);
         document.getElementById("resultado-perdida").appendChild(p3);
 
         var p4 = document.createElement('p');
