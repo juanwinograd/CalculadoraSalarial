@@ -1025,7 +1025,7 @@ function mostrar_caida(mes) {
 
         var p4 = document.createElement('p');
         p4.innerHTML = "O que para estar igual que en "+mes+"necesitás un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento*100).toFixed(1)+"%</span>";
-        document.getElementById("resultado-perdida").appendChild(p4)
+        document.getElementById("resultado-perdida").appendChild(p4);
     }
     else {
         var p2 = document.createElement('p');
