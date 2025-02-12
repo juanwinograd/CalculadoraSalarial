@@ -558,7 +558,7 @@ function elegir_jornada(evt) {
         }
     }
     if (docente.cargos[n].jornada != "") {
-        // document.getElementById('bruto').innerHTML = "Seleccionar cargo"
+        document.getElementById('bruto').innerHTML = "Seleccionar cargo"
         document.getElementById('neto').innerHTML = "Seleccionar cargo"          
             
         document.getElementById(docente.cargos[n].jornada+n).style.display = "inline";
@@ -620,7 +620,7 @@ function elegir_especial(evt) {
         docente.cargos[n].plus = 0;
         document.getElementById("horas"+n).style.display = "inline";
         document.getElementById("horas"+n).value = "";
-        // document.getElementById('bruto').innerHTML = "Ingresar cant. horas";
+        document.getElementById('bruto').innerHTML = "Ingresar cant. horas";
         document.getElementById('neto').innerHTML = "Ingresar cant. horas";		            
                 }
     // todo lo demas
@@ -698,7 +698,7 @@ function elegir_media(evt) {
         docente.cargos[n].plus = 0;
         document.getElementById("horas"+n).style.display = "inline";
         document.getElementById("horas"+n).value = "";
-        // document.getElementById('bruto').innerHTML = "Ingresar cant. horas";
+        document.getElementById('bruto').innerHTML = "Ingresar cant. horas";
         document.getElementById('neto').innerHTML = "Ingresar cant. horas";		            
                 }
 
@@ -736,7 +736,7 @@ function elegir_terciaria(evt) {
         docente.cargos[n].jornada = "HorasT"
         document.getElementById("horas"+n).style.display = "inline";
         document.getElementById("horas"+n).value = "";			
-        // document.getElementById('bruto').innerHTML = "Ingresar cant. horas";
+        document.getElementById('bruto').innerHTML = "Ingresar cant. horas";
         document.getElementById('neto').innerHTML = "Ingresar cant. horas";            
                 }
     //cargos estandar
@@ -760,7 +760,7 @@ function elegir_antiguedad() {
     var selectorAntiguedad = document.getElementById("antiguedad");
     docente.antiguedad = Number(selectorAntiguedad.options[selectorAntiguedad.selectedIndex].value);
     if (docente.mes == "") {
-        // document.getElementById('bruto').innerHTML = "Seleccionar mes";
+        document.getElementById('bruto').innerHTML = "Seleccionar mes";
         document.getElementById('neto').innerHTML = "Seleccionar mes";
     }
     else {
@@ -819,28 +819,28 @@ function calcular(n) {
     if (mostrarDetalle == true) {limpiar_detalle();}
 
     if ((docente.cargos[n].jornada == "HorasT" || docente.cargos[n].jornada == "HorasM")  && docente.cargos[n].horas <= 0) {
-            // document.getElementById('bruto').innerHTML = "Ingresar cant. horas";
+            document.getElementById('bruto').innerHTML = "Ingresar cant. horas";
             document.getElementById('neto').innerHTML = "Ingresar cant. horas";
                     }
     else if (docente.cargos[n].puntaje == 0) {
-        // document.getElementById('bruto').innerHTML = "Seleccionar cargo";
+        document.getElementById('bruto').innerHTML = "Seleccionar cargo";
         document.getElementById('neto').innerHTML = "Seleccionar cargo";
                 }
     else if (docente.antiguedad == -1) {
-        // document.getElementById('bruto').innerHTML = "Seleccionar antigüedad";
+        document.getElementById('bruto').innerHTML = "Seleccionar antigüedad";
         document.getElementById('neto').innerHTML = "Seleccionar antigüedad";
                 }
     else if (segundoCargo && docente.cargos[1].puntaje == 0) {
-        // document.getElementById('bruto').innerHTML = "Seleccionar segundo cargo";
+        document.getElementById('bruto').innerHTML = "Seleccionar segundo cargo";
         document.getElementById('neto').innerHTML = "Seleccionar segundo cargo";
                 }
     // else if (docente.mes == "") {
-    // //     document.getElementById('bruto').innerHTML = "Seleccionar mes";
+    //     document.getElementById('bruto').innerHTML = "Seleccionar mes";
     //     document.getElementById('neto').innerHTML = "Seleccionar mes";
     //             }
     else {
         docente.calcular_sueldo_docente();
-        // document.getElementById('bruto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoBruto);	
+        document.getElementById('bruto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoBruto);	
         document.getElementById('neto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoNeto);
 
         //Si está activado el detalle lo muestro
