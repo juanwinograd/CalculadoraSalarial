@@ -1024,7 +1024,7 @@ function mostrar_caida(mes) {
         document.getElementById("resultado-perdida").appendChild(p3);
 
         var p4 = document.createElement('p');
-        p4.innerHTML = "O sea que, sólo para recuperar lo perdido, necesitarías un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento*100).toFixed(1)+"%</span>.";
+        p4.innerHTML = "Para recuperar lo perdido, necesitarías un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento*100).toFixed(1)+"%</span>.";
         document.getElementById("resultado-perdida").appendChild(p4);
     }
     else {
