@@ -1012,7 +1012,7 @@ function mostrar_caida(mes) {
         var docente_ = docente.clone(mes);
         var sueldoInflacionado = docente_.sueldoNeto*inflacion;
         var perdida = -1+docente.sueldoNeto/sueldoInflacionado;
-        var aumento = sueldoInflacionado/docente.sueldoNeto-1;
+        var aumento_necesario = sueldoInflacionado/docente.sueldoNeto-1;
 
         var p2 = document.createElement('p');
         p2.innerHTML =  "De haberse actualizado tu sueldo de "+mes+" siguiendo la inflación ahora <b> deberías cobrar "
@@ -1027,7 +1027,7 @@ function mostrar_caida(mes) {
         document.getElementById("resultado-perdida").appendChild(p3);
 
         var p4 = document.createElement('p');
-        p4.innerHTML = "Para recuperar lo perdido, necesitarías un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento*100).toFixed(1)+"%</span>.";
+        p4.innerHTML = "Para recuperar lo perdido, necesitarías un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento_necesario*100).toFixed(1)+"%</span>.";
         document.getElementById("resultado-perdida").appendChild(p4);
     }
     else {
