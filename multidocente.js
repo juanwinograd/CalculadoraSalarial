@@ -1011,7 +1011,8 @@ function mostrar_caida(mes) {
     if (docente.calculado) {
         var docente_ = docente.clone(mes);
         var sueldoInflacionado = docente_.sueldoNeto*inflacion;
-        var perdida = -1+docente.sueldoNeto/sueldoInflacionado;
+        var perdida = -docente.sueldoNeto/sueldoInflacionado-1;
+        var aumento = sueldoInflacionado/docente.sueldoNeto-1;
 
         var p2 = document.createElement('p');
         p2.innerHTML =  "En "+mes+" por los mismos cargos cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
@@ -1021,6 +1022,9 @@ function mostrar_caida(mes) {
         var p3 = document.createElement('p');
         p3.innerHTML =  "Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span> desde "+mes;
         document.getElementById("resultado-perdida").appendChild(p3);
+
+        var p4 = document.createElement('p');
+        p4.innerHTML = "O que para estar igual que en "+mes+"necesitás un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento*100).toFixed(1)+"%</span>";
     }
     else {
         var p2 = document.createElement('p');
