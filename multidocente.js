@@ -1020,16 +1020,17 @@ function mostrar_caida(mes) {
         document.getElementById("resultado-perdida").appendChild(p2);
 
         var p3 = document.createElement('p');
-        p3.innerHTML =  "Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span> desde "+mes;
+        p3.innerHTML =  "Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span>.";
         document.getElementById("resultado-perdida").appendChild(p3);
 
         var p4 = document.createElement('p');
-        p4.innerHTML = "O sea que, sólo para recuperar lo perdido, necesitarías un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento*100).toFixed(1)+"%</span>";
+        p4.innerHTML = "O sea que, sólo para recuperar lo perdido, necesitarías un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento*100).toFixed(1)+"%</span>.";
         document.getElementById("resultado-perdida").appendChild(p4);
     }
     else {
         var p2 = document.createElement('p');
-        p2.innerHTML =  "<span style='color:grey;'>Para calcular la caída salarial, ingresá tus cargos</span>";
+        p2.style.color = "grey";
+        p2.innerHTML =  "Para calcular la caída salarial, ingresá tus cargos";
         document.getElementById("resultado-perdida").appendChild(p2);
     }
     var p5 = document.createElement('p');
