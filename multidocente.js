@@ -1011,7 +1011,7 @@ function mostrar_caida(mes) {
     if (docente.calculado) {
         var docente_ = docente.clone(mes);
         var sueldoInflacionado = docente_.sueldoNeto*inflacion;
-        var perdida = -docente.sueldoNeto/sueldoInflacionado-1;
+        var perdida = -1+docente.sueldoNeto/sueldoInflacionado;
         var aumento = sueldoInflacionado/docente.sueldoNeto-1;
 
         var p2 = document.createElement('p');
