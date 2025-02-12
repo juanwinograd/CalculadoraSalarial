@@ -1015,8 +1015,8 @@ function mostrar_caida(mes) {
         var aumento = sueldoInflacionado/docente.sueldoNeto-1;
 
         var p2 = document.createElement('p');
-        p2.innerHTML =  "En "+mes+" por los mismos cargos cobrabas "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
-        ". De haberse actualizado tu sueldo siguiendo la inflación ahora <b> deberías cobrar "+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
+        p2.innerHTML =  "De haberse actualizado tu sueldo de "+mes+" siguiendo la inflación ahora <b> deberías cobrar "
+        +Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
         document.getElementById("resultado-perdida").appendChild(p2);
 
         var p3 = document.createElement('p');
@@ -1024,7 +1024,7 @@ function mostrar_caida(mes) {
         document.getElementById("resultado-perdida").appendChild(p3);
 
         var p4 = document.createElement('p');
-        p4.innerHTML = "O que para estar igual que en "+mes+"necesitás un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento*100).toFixed(1)+"%</span>";
+        p4.innerHTML = "O sea que, sólo para recuperar lo perdido, necesitarías un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento*100).toFixed(1)+"%</span>";
         document.getElementById("resultado-perdida").appendChild(p4);
     }
     else {
