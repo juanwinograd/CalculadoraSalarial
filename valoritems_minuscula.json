@@ -265,8 +265,26 @@
     "mdm70_120": 341184,
     "mdm70_120Piso": 327404,
     "salarioMinimo": 1215842,
-    "salarioMinimoPiso": 986643,
+    "salarioMinimoPiso": 986965,
     "salarioMinimoPisoJS": 391240,
+    "valorUMAF": 698.6760554
+  },
+  "febrero 2025": {
+    "puntoIndice": 165.41,
+    "dec483": 475548,
+    "dec483Piso": 454320,
+    "sumaFija": 60000,
+    "adicionalEspecial": 68000,
+    "fonid": 0,
+    "conectividad": 0,
+    "adicionalExtendida": 116512,
+    "mdm0_60": 289107,
+    "mdm0_60Piso": 277414.2,
+    "mdm70_120": 358243.2,
+    "mdm70_120Piso": 343774.2,
+    "salarioMinimo": 1280034,
+    "salarioMinimoPiso": 1039713,
+    "salarioMinimoPisoJS": 412502,
     "valorUMAF": 698.6760554
   }
 }
