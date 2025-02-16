@@ -1014,6 +1014,8 @@ function mostrar_caida(mes) {
         var perdida = -1+docente.sueldoNeto/sueldoInflacionado;
         var aumento_necesario = sueldoInflacionado/docente.sueldoNeto-1;
 
+        console.log("tu sueldo en "+mes+"era de "+docente.sueldoNeto+" y ahora deberías cobrar "+sueldoInflacionado);
+
         var p2 = document.createElement('p');
         p2.innerHTML =  "De haberse actualizado tu sueldo de "+mes+" siguiendo la inflación ahora <b> deberías cobrar "
         +Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
