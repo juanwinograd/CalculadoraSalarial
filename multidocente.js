@@ -322,32 +322,6 @@ class Docente {
 }
 
 var docente = new Docente();
-
-var valor_items, mes = "";
-fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems_minuscula.json')
-    .then(response => response.json())
-    .then(data => {
-        valor_items = data;
-        var select = document.createElement('select');
-        select.setAttribute("class","tdForm");
-        select.setAttribute("id","mes");
-        const optionElement = document.createElement("option");  
-        optionElement.textContent = 'Seleccionar mes'; 
-        optionElement.value = ''; 
-        select.appendChild(optionElement);
-        for (let mes in valor_items) { 
-            const optionElement = document.createElement("option"); 
-            optionElement.value = mes; 
-            optionElement.textContent = mes; 
-            select.appendChild(optionElement); 
-        };
-        document.getElementById("contenedor-mes").appendChild(select);
-        select.setAttribute("onchange","elegir_mes(event)");
-
-        //fijo el mes en el que se carga la página
-        docente.fijar_valoresJC(MES_ACTUAL);
-    })
-    .catch(error => console.error('Error loading JSON:', error));
     
 var ipc;
 fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc.json')
@@ -356,6 +330,34 @@ fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc
         ipc = data;
     })
     .catch(error => console.error('Error loading JSON:', error));
+
+
+    var valor_items, mes = "noviembre 2023";
+    fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems_minuscula.json')
+        .then(response => response.json())
+        .then(data => {
+            valor_items = data;
+            // var select = document.createElement('select');
+            // select.setAttribute("class","tdForm");
+            // select.setAttribute("id","mes");
+            // const optionElement = document.createElement("option");  
+            // optionElement.textContent = 'Seleccionar mes'; 
+            // optionElement.value = ''; 
+            // select.appendChild(optionElement);
+            // for (let mes in valor_items) { 
+            //     const optionElement = document.createElement("option"); 
+            //     optionElement.value = mes; 
+            //     optionElement.textContent = mes; 
+            //     select.appendChild(optionElement); 
+            // };
+            // document.getElementById("contenedor-mes").appendChild(select);
+            // select.setAttribute("onchange","elegir_mes(event)");
+    
+            //fijo el mes en el que se carga la página
+            docente.fijar_valoresJC(MES_ACTUAL);
+            mostrar_caida(mes)
+        })
+        .catch(error => console.error('Error loading JSON:', error));
 
 var items = {
     basico : {
