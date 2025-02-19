@@ -1020,7 +1020,7 @@ function mostrar_caida(mes) {
             Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto));
 
         var p2 = document.createElement('p');
-        p2.innerHTML =  "De haberse actualizado tu sueldo de "+mes+" siguiendo la inflación ahora <b> deberías cobrar "
+        p2.innerHTML =  "De haberse actualizado tu sueldo de al ritmo de la inflación ahora <b> deberías cobrar "
         +Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
         document.getElementById("resultado-perdida").appendChild(p2);
 
