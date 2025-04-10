@@ -1013,7 +1013,7 @@ function mostrar_caida(mes) {
     if (docente.calculado) {
         var docente_ = docente.clone(mes);
         var sueldoInflacionado = docente_.sueldoNeto*inflacion;
-        var perdida = -1+docente.sueldoNeto/sueldoInflacionado;
+        var perdida = (-1+docente.sueldoNeto/sueldoInflacionado)*100;
         var aumento_necesario = sueldoInflacionado/docente.sueldoNeto-1;
 
         console.log("tu sueldo en "+mes+" era de "+
@@ -1027,7 +1027,7 @@ function mostrar_caida(mes) {
 
         var p3 = document.createElement('p');
         p3.innerHTML =  "Significa una pérdida de <span style='color:red; font-weight:bold;'>"+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0})
-        .format(sueldoInflacionado-docente.sueldoNeto)+" ("+perdida+"%)</span> a valores actuales.";
+        .format(sueldoInflacionado-docente.sueldoNeto)+" ("+perdida.toFixed(0)+"%)</span> a valores actuales.";
         //"Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span>."+
         
         document.getElementById("resultado-perdida").appendChild(p3);
