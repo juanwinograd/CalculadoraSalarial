@@ -304,5 +304,23 @@
     "salarioMinimoPiso": 1039713,
     "salarioMinimoPisoJS": 412502,
     "valorUMAF": 698.6760554
+  },
+  "abril 2025": {
+    "puntoIndice": 172.03,
+    "dec483": 497940,
+    "dec483Piso": 475863,
+    "sumaFija": 60000,
+    "adicionalEspecial": 68000,
+    "fonid": 0,
+    "conectividad": 0,
+    "adicionalExtendida": 121172,
+    "mdm0_60": 300671,
+    "mdm0_60Piso": 288511,
+    "mdm70_120": 372573,
+    "mdm70_120Piso": 357525,
+    "salarioMinimo": 1333955,
+    "salarioMinimoPiso": 1084022,
+    "salarioMinimoPisoJS": 430362,
+    "valorUMAF": 698.6760554
   }
 }
