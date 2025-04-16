@@ -1045,6 +1045,7 @@ function mostrar_caida(mes) {
     }
     var p5 = document.createElement('p');
     p5.innerHTML =  "*Fuente: Instituto de Estadística y Censos de la Ciudad de Buenos Aires";
+    if (ipc[MES_ACTUAL] == undefined) {p5.innerHTML +=  ". (Todavía no se publicó el IPC de "+MES_ACTUAL+")";}
     p5.style.fontSize = "small";
     document.getElementById("resultado-perdida").appendChild(p5);
 }
