@@ -1018,26 +1018,16 @@ function mostrar_caida(mes) {
         var sueldoInflacionado = docente_.sueldoNeto*inflacion;
         var perdida = (-1+docente.sueldoNeto/sueldoInflacionado)*100;
         var aumento_necesario = sueldoInflacionado/docente.sueldoNeto-1;
-
-        console.log("tu sueldo en "+mes+" era de "+
-            Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+
-        ". aumento "+(docente.sueldoNeto/docente_.sueldoNeto-1)*100+"%");
     
         var p2 = document.createElement('p');
-        p2.innerHTML =  "De haberse actualizado tu sueldo de al ritmo de la inflación ahora <b> deberías cobrar "
-        +Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(sueldoInflacionado)+".</b>";
+        p2.innerHTML =  "Tu sueldo en "+mes+" era de "+
+            Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto);
         document.getElementById("resultado-perdida").appendChild(p2);
 
         var p3 = document.createElement('p');
-        p3.innerHTML =  "Significa una pérdida de <span style='color:red; font-weight:bold;'>"+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0})
-        .format(sueldoInflacionado-docente.sueldoNeto)+" ("+perdida.toFixed(0)+"%)</span> a valores actuales.";
+        p3.innerHTML =  "El aumento fue del "+(docente.sueldoNeto/docente_.sueldoNeto-1)*100+"%";
         //"Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span>."+
-        
         document.getElementById("resultado-perdida").appendChild(p3);
-
-        var p4 = document.createElement('p');
-        p4.innerHTML = "Para recuperar lo perdido, necesitarías un aumento de <span style='color:orange; font-weight:bold;'>"+(aumento_necesario*100).toFixed(1)+"%</span>.";
-        document.getElementById("resultado-perdida").appendChild(p4);
     }
     else {
         var p2 = document.createElement('p');
