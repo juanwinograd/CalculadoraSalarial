@@ -1032,7 +1032,7 @@ function mostrar_caida(mes) {
     else {
         var p2 = document.createElement('p');
         p2.style.color = "grey";
-        p2.innerHTML =  "Para calcular la caída salarial, ingresá tus cargos";
+        p2.innerHTML =  "Para calcular cómo era tu salario, ingresá tus cargos";
         document.getElementById("resultado-perdida").appendChild(p2);
     }
     var p5 = document.createElement('p');
