@@ -995,7 +995,6 @@ function elegir_mes(evt) {
     elegir_antiguedad();
     calcular(0)
     
-    mes = evt.target.value;
     if (mes) {mostrar_caida(mes);}
     else {
         var resultadoPerdida = document.getElementById("resultado-perdida");
