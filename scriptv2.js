@@ -1008,10 +1008,10 @@ function mostrar_caida(mes) {
     var resultadoPerdida = document.getElementById("resultado-perdida");
     while (resultadoPerdida.firstChild) resultadoPerdida.removeChild(resultadoPerdida.firstChild);
     
-    var inflacion = ipc[ULTIMO_IPC]/ipc[mes];
-    var p1 = document.createElement('p');
-    p1.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+" fue de <span style='color:red; font-weight:bold;'>"+((inflacion-1)*100).toFixed(1)+"%</span>*";
-    document.getElementById("resultado-perdida").appendChild(p1);
+    // var inflacion = ipc[ULTIMO_IPC]/ipc[mes];
+    // var p1 = document.createElement('p');
+    // p1.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+" fue de <span style='color:red; font-weight:bold;'>"+((inflacion-1)*100).toFixed(1)+"%</span>*";
+    // document.getElementById("resultado-perdida").appendChild(p1);
 
     if (docente.calculado) {
         var docente_ = docente.clone(mes);
