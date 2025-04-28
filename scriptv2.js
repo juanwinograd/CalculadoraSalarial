@@ -333,7 +333,7 @@ fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc
     .catch(error => console.error('Error loading JSON:', error));
 
 
-    var valor_items;
+    var valor_items, mes;
     fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems_minuscula.json')
         .then(response => response.json())
         .then(data => {
