@@ -333,7 +333,7 @@ fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc
     .catch(error => console.error('Error loading JSON:', error));
 
 
-    var valor_items, mes = "noviembre 2023";
+    var valor_items;
     fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems_minuscula.json')
         .then(response => response.json())
         .then(data => {
@@ -356,7 +356,7 @@ fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc
     
             //fijo el mes en el que se carga la página
             docente.fijar_valoresJC(MES_ACTUAL);
-            mostrar_caida(mes)
+            // mostrar_caida(mes)
         })
         .catch(error => console.error('Error loading JSON:', error));
 
@@ -989,16 +989,18 @@ function agregar_asignaciones() {
 
 
 function elegir_mes(evt) {
-    
+
     mes = evt.target.value;
-    if (mes) {mostrar_caida(mes);}
-    else {
-        var resultadoPerdida = document.getElementById("resultado-perdida");
-        while (resultadoPerdida.firstChild) resultadoPerdida.removeChild(resultadoPerdida.firstChild);
-    }
-    // docente.valoresJC = valor_items[mes];
-    // docente.fijar_mdm();
-    // calcular(0);
+    valoresJC = valor_items[mes]
+    elegir_antiguedad();
+    calcular(0)
+    
+    // mes = evt.target.value;
+    // if (mes) {mostrar_caida(mes);}
+    // else {
+    //     var resultadoPerdida = document.getElementById("resultado-perdida");
+    //     while (resultadoPerdida.firstChild) resultadoPerdida.removeChild(resultadoPerdida.firstChild);
+    // }
 }
 
 function mostrar_caida(mes) {
