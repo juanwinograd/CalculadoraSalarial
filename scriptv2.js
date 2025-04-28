@@ -1025,7 +1025,7 @@ function mostrar_caida(mes) {
         document.getElementById("resultado-perdida").appendChild(p2);
 
         var p3 = document.createElement('p');
-        p3.innerHTML =  "El aumento fue del "+(docente.sueldoNeto/docente_.sueldoNeto-1)*100+"%";
+        p3.innerHTML =  "El aumento fue del "+((docente.sueldoNeto/docente_.sueldoNeto-1)*100).toFixed(2)+"%";
         //"Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span>."+
         document.getElementById("resultado-perdida").appendChild(p3);
     }
