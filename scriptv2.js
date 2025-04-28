@@ -340,7 +340,7 @@ fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc
             valor_items = data;
             var select = document.createElement('select');
             select.setAttribute("class","tdForm");
-            select.setAttribute("id","mes");
+            select.setAttribute("id","selector_mes");
             const optionElement = document.createElement("option");  
             optionElement.textContent = 'Seleccionar mes'; 
             optionElement.value = ''; 
