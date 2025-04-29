@@ -1037,9 +1037,9 @@ function mostrar_caida(mes) {
         p2.innerHTML =  "Para calcular cómo era tu salario, ingresá tus cargos";
         document.getElementById("resultado-perdida").appendChild(p2);
     }
-    var p5 = document.createElement('p');
-    p5.innerHTML =  "*Fuente: Instituto de Estadística y Censos de la Ciudad de Buenos Aires";
-    if (ipc[MES_ACTUAL] == undefined) {p5.innerHTML +=  ". (Sin contemplar la inflación de "+MES_ACTUAL+" que aún no se publicó.)";}
-    p5.style.fontSize = "small";
-    document.getElementById("resultado-perdida").appendChild(p5);
+    // var p5 = document.createElement('p');
+    // p5.innerHTML =  "*Fuente: Instituto de Estadística y Censos de la Ciudad de Buenos Aires";
+    // if (ipc[MES_ACTUAL] == undefined) {p5.innerHTML +=  ". (Sin contemplar la inflación de "+MES_ACTUAL+" que aún no se publicó.)";}
+    // p5.style.fontSize = "small";
+    // document.getElementById("resultado-perdida").appendChild(p5);
 }
