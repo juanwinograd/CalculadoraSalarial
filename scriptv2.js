@@ -1009,24 +1009,25 @@ function mostrar_caida(mes) {
 
     console.log(mes);
     var inflacion = ipc[ULTIMO_IPC]/ipc[mes];
-    var p1 = document.createElement('p');
-    p1.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+" fue de <span style='color:red; font-weight:bold;'>"+((inflacion-1)*100).toFixed(1)+"%</span>*";
-    document.getElementById("resultado-perdida").appendChild(p1);
+    // var p1 = document.createElement('p');
+    // p1.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+" fue de <span style='color:red; font-weight:bold;'>"+((inflacion-1)*100).toFixed(1)+"%</span>*";
+    // document.getElementById("resultado-perdida").appendChild(p1);
 
     if (docente.calculado) {
         var docente_ = docente.clone(mes);
         var sueldoInflacionado = docente_.sueldoNeto*inflacion;
         var perdida = (-1+docente.sueldoNeto/sueldoInflacionado)*100;
         var aumento_necesario = sueldoInflacionado/docente.sueldoNeto-1;
+        console.log("caída: ",perdida);
+        console.log("aumento necesario: ",aumento_necesario);
     
         var p2 = document.createElement('p');
-        p2.innerHTML =  "Tu sueldo en "+mes+" era de "+
-            Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto);
+        p2.innerHTML =  "Tu sueldo en "+mes+" era de <b>"+
+            Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+"</b>";
         document.getElementById("resultado-perdida").appendChild(p2);
 
         var p3 = document.createElement('p');
-        p3.innerHTML =  "El aumento fue del "+((docente.sueldoNeto/docente_.sueldoNeto-1)*100).toFixed(2)+"%";
-        //"Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span>."+
+        p3.innerHTML =  "El aumento fue acumualdo fue del <b>"+((docente.sueldoNeto/docente_.sueldoNeto-1)*100).toFixed(2)+"%</b>";
         document.getElementById("resultado-perdida").appendChild(p3);
     }
     else {
