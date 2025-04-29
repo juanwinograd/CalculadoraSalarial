@@ -1028,7 +1028,7 @@ function mostrar_caida(mes) {
         document.getElementById("resultado-perdida").appendChild(p2);
 
         var p3 = document.createElement('p');
-        p3.innerHTML =  "El aumento fue acumualdo fue del <b>"+((docente.sueldoNeto/docente_.sueldoNeto-1)*100).toFixed(2)+"%</b>";
+        p3.innerHTML =  "El aumento acumualdo fue del <b>"+((docente.sueldoNeto/docente_.sueldoNeto-1)*100).toFixed(2)+"%</b>";
         document.getElementById("resultado-perdida").appendChild(p3);
     }
     else {
