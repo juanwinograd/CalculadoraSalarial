@@ -165,13 +165,14 @@ class Docente {
         //Jerarquizacion y su proporcional del presentismo no cuentan para cmg
         // cargo.salarioMinimo = cargo.salarioMinimo + cargo.jerarquizacion*1.1*Rem;
 
-
-        cargo.antiguedadBasico = (cargo.basico + cargo.jerarquizacion + cargo.dedicacionExclusiva)*this.antiguedad;
-        cargo.antiguedadDec483 = cargo.dec483*this.antiguedad
     }
 
     //calcula el sueldo a partir de los items
     calcular_sueldo() {
+
+        //la antigüedad es para el docente, no el cargo
+        cargo.antiguedadBasico = (cargo.basico + cargo.jerarquizacion + cargo.dedicacionExclusiva)*this.antiguedad;
+        cargo.antiguedadDec483 = cargo.dec483*this.antiguedad
 
         //sumo las cifras remunerativas
         this.sinCMG = (this.basico*1.1 + this.dec483*1.1 + this.antiguedadBasico + this.antiguedadDec483 + this.supleEscRec)*Rem;
