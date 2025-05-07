@@ -171,8 +171,8 @@ class Docente {
     calcular_sueldo() {
 
         //la antigüedad es para el docente, no el cargo
-        cargo.antiguedadBasico = (cargo.basico + cargo.jerarquizacion + cargo.dedicacionExclusiva)*this.antiguedad;
-        cargo.antiguedadDec483 = cargo.dec483*this.antiguedad
+        this.antiguedadBasico = (this.basico + this.jerarquizacion + this.dedicacionExclusiva)*this.antiguedad;
+        this.antiguedadDec483 = this.dec483*this.antiguedad
 
         //sumo las cifras remunerativas
         this.sinCMG = (this.basico*1.1 + this.dec483*1.1 + this.antiguedadBasico + this.antiguedadDec483 + this.supleEscRec)*Rem;
