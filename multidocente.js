@@ -1,5 +1,5 @@
 const MES_ACTUAL = "abril 2025";
-const ULTIMO_IPC = "marzo 2025";
+const ULTIMO_IPC = "abril 2025";
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
 var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
 var DescuentoAdemys = 0, DescuentoPresentismo = 0;
@@ -1046,7 +1046,7 @@ function mostrar_caida(mes) {
     }
     var p5 = document.createElement('p');
     p5.innerHTML =  "*Fuente: Instituto de Estadística y Censos de la Ciudad de Buenos Aires";
-    if (ipc[MES_ACTUAL] == undefined) {p5.innerHTML +=  ". (Sin contemplar la inflación de "+MES_ACTUAL+" que aún no se publicó.)";}
+    if (ipc[MES_ACTUAL] == undefined) {p5.innerHTML +=  ". (Sin contemplar la inflación de mayo que aún no se publicó.)";}
     p5.style.fontSize = "small";
     document.getElementById("resultado-perdida").appendChild(p5);
 }
