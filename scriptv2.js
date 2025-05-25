@@ -1,5 +1,5 @@
 const MES_ACTUAL = "mayo 2025"; const A_COBRAR = "junio 2025";
-const ULTIMO_IPC = "abril 2025";
+const ULTIMO_IPC = "mayo 2025";
 document.getElementById("mes-actual").innerHTML = "Sueldo de "+MES_ACTUAL.slice(0, -5)+" (a cobrar en "+A_COBRAR.slice(0, -5)+")";
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
 var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
@@ -1042,7 +1042,7 @@ function mostrar_caida(mes) {
         
         var p5 = document.createElement('p');
         p5.innerHTML =  "*Fuente: Instituto de Estadística y Censos de la Ciudad de Buenos Aires";
-        if (ipc[MES_ACTUAL] == undefined) {p5.innerHTML +=  ". (Sin contemplar la inflación de "+MES_ACTUAL+" que aún no se publicó.)";}
+        if (ipc[A_COBRAR] == undefined) {p5.innerHTML +=  ". (Sin contemplar la inflación de "+MES_ACTUAL+" que aún no se publicó.)";}
         p5.style.fontSize = "small"; p5.style.fontStyle = "italic";
         document.getElementById("resultado-perdida").appendChild(p5);
     }
