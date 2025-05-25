@@ -1,5 +1,6 @@
-const MES_ACTUAL = "abril 2025";
-const ULTIMO_IPC = "marzo 2025";
+const MES_ACTUAL = "mayo 2025"; const A_COBRAR = "junio 2025";
+const ULTIMO_IPC = "abril 2025";
+document.getElementById("mes-actual").innerHTML = "Sueldo de "+MES_ACTUAL.slice(0, -5)+" (a cobrar en "+A_COBRAR.slice(0, -5)+")";
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
 var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
 var DescuentoAdemys = 0, DescuentoPresentismo = 0;
@@ -333,7 +334,7 @@ fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc
     .catch(error => console.error('Error loading JSON:', error));
 
 
-    var valor_items, mes;
+    var valor_items, mes = "";
     fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/valoritems_minuscula.json')
         .then(response => response.json())
         .then(data => {
@@ -861,6 +862,14 @@ function mostrar_detalle() {
     //Si ya había algo lo limpio
     var divDetalle = limpiar_detalle();
 
+    //creo el detalle
+    var p = document.createElement('p');
+    p.setAttribute("id","leyenda");
+    p.style.fontSize = "14px"; p.style.fontStyle = "italic";
+    p.style.lineHeight = "1.5";
+    p.innerText = "Se muestra el total que deberías cobrar por la suma de tus cargos, teniendo en cuenta los topes en cada ítem.";
+    divDetalle.appendChild(p);
+
     titulo1 = document.createElement("h4");
     titulo1.innerHTML = "Cifras remunerativas";
     divDetalle.appendChild(titulo1);
@@ -919,7 +928,7 @@ function activar_detalle() {
         var divDetalle = document.createElement("div");
         divDetalle.setAttribute("id","detalle");
         divDetalle.setAttribute("class","detalle");
-        document.getElementById("calculadora").appendChild(divDetalle);
+        document.getElementById("resultado").appendChild(divDetalle);
         mostrar_detalle()
         mostrarDetalle = true;
         document.getElementById("botondetalle").innerHTML = "Ocultar detalle"
@@ -950,13 +959,8 @@ function agregar_cargo() {
                 }
             }}
         )
-        var p = document.createElement('p');
-        p.setAttribute("id","leyenda");
-        p.innerText = "*Se muestra el total que deberías cobrar por la suma de los cargos teniendo en cuenta los topes.";
 
-        var calculadora = document.getElementById("calculadora");
-        calculadora.insertBefore(p,document.getElementById("botondetalle"));
-        calculadora.insertBefore(formu,document.getElementById("resultado"));
+        document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
         document.getElementById("botoncargo").innerHTML = "-";
         document.getElementById("textocargo").innerHTML = "Eliminar segundo cargo";
         segundoCargo = true;	
@@ -964,7 +968,6 @@ function agregar_cargo() {
     }
     else {
         document.getElementById("formu1").remove();
-        document.getElementById("leyenda").remove();
         document.getElementById("botoncargo").innerHTML = "+";
         document.getElementById("textocargo").innerHTML = "Agregar otro cargo";
         segundoCargo = false; 
@@ -1008,38 +1011,45 @@ function mostrar_caida(mes) {
     var resultadoPerdida = document.getElementById("resultado-perdida");
     while (resultadoPerdida.firstChild) resultadoPerdida.removeChild(resultadoPerdida.firstChild);
 
-    console.log(mes);
     var inflacion = ipc[ULTIMO_IPC]/ipc[mes];
-    // var p1 = document.createElement('p');
-    // p1.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+" fue de <span style='color:red; font-weight:bold;'>"+((inflacion-1)*100).toFixed(1)+"%</span>*";
-    // document.getElementById("resultado-perdida").appendChild(p1);
-
     if (docente.calculado) {
         var docente_ = docente.clone(mes);
         var sueldoInflacionado = docente_.sueldoNeto*inflacion;
         var perdida = (-1+docente.sueldoNeto/sueldoInflacionado)*100;
         var aumento_necesario = sueldoInflacionado/docente.sueldoNeto-1;
-        console.log("caída: ",perdida);
-        console.log("aumento necesario: ",aumento_necesario);
+        // console.log("caída: ",perdida);
+        // console.log("aumento necesario: ",aumento_necesario);
     
-        var p2 = document.createElement('p');
-        p2.innerHTML =  "Tu sueldo en "+mes+" era de <b>"+
+        var p1 = document.createElement('p');
+        p1.innerHTML =  "Con los mismos cargos, tu sueldo en "+mes+" era de <b>"+
             Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente_.sueldoNeto)+"</b>";
-        document.getElementById("resultado-perdida").appendChild(p2);
+        document.getElementById("resultado-perdida").appendChild(p1);
 
+        var p2 = document.createElement('p');
+        p2.innerHTML =  "El <b>aumento acumualdo</b> desde "+mes+" fue del <b>"+((docente.sueldoNeto/docente_.sueldoNeto-1)*100).toFixed(2)+"%</b>";
+        document.getElementById("resultado-perdida").appendChild(p2);
+        
         var p3 = document.createElement('p');
-        p3.innerHTML =  "El aumento acumualdo fue del <b>"+((docente.sueldoNeto/docente_.sueldoNeto-1)*100).toFixed(2)+"%</b>";
+        p3.innerHTML =  "La <span style='color:red; font-weight:bold;'>inflación acumulada</span> desde "+mes+
+        " fue de <span style='color:red; font-weight:bold;'>"+((inflacion-1)*100).toFixed(1)+"%</span>*";
         document.getElementById("resultado-perdida").appendChild(p3);
+
+        var p4 = document.createElement('p');
+        p4.innerHTML =  "El resultado es " + (perdida < 0 ? "una caída" : "un aumento") +
+        " de tu salario real del <span style='color:"+(perdida < 0 ? "red" : "green")+"; font-weight:bold;'>" 
+        + (perdida).toFixed(1) + "%</span>";
+        document.getElementById("resultado-perdida").appendChild(p4);
+        
+        var p5 = document.createElement('p');
+        p5.innerHTML =  "*Fuente: Instituto de Estadística y Censos de la Ciudad de Buenos Aires";
+        if (ipc[MES_ACTUAL] == undefined) {p5.innerHTML +=  ". (Sin contemplar la inflación de "+MES_ACTUAL+" que aún no se publicó.)";}
+        p5.style.fontSize = "small"; p5.style.fontStyle = "italic";
+        document.getElementById("resultado-perdida").appendChild(p5);
     }
     else {
-        var p2 = document.createElement('p');
-        p2.style.color = "grey";
-        p2.innerHTML =  "Para calcular cómo era tu salario, ingresá tus cargos";
-        document.getElementById("resultado-perdida").appendChild(p2);
+        var p1 = document.createElement('p');
+        p1.style.color = "grey";
+        p1.innerHTML =  "Ingresá tus cargos";
+        document.getElementById("resultado-perdida").appendChild(p1);
     }
-    // var p5 = document.createElement('p');
-    // p5.innerHTML =  "*Fuente: Instituto de Estadística y Censos de la Ciudad de Buenos Aires";
-    // if (ipc[MES_ACTUAL] == undefined) {p5.innerHTML +=  ". (Sin contemplar la inflación de "+MES_ACTUAL+" que aún no se publicó.)";}
-    // p5.style.fontSize = "small";
-    // document.getElementById("resultado-perdida").appendChild(p5);
 }

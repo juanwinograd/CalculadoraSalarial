@@ -1031,7 +1031,6 @@ function mostrar_caida(mes) {
         p3.innerHTML =  "Significa una pérdida de <span style='color:red; font-weight:bold;'>"+Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0})
         .format(sueldoInflacionado-docente.sueldoNeto)+" ("+perdida.toFixed(0)+"%)</span> a valores actuales.";
         //"Significa que tu salario real cayó <span style='color:red; font-weight:bold;'>"+(perdida*100).toFixed(1)+"%</span>."+
-        
         document.getElementById("resultado-perdida").appendChild(p3);
 
         var p4 = document.createElement('p');
