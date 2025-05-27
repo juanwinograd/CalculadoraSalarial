@@ -346,7 +346,7 @@ fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc
             optionElement.textContent = 'Seleccionar mes'; 
             optionElement.value = ''; 
             select.appendChild(optionElement);
-            for (let i = Object.keys(valor_items).length - 1; i >= 0; i--) {
+            for (let i = Object.keys(valor_items).length - 1; i >= 1; i--) {
                 let mes = Object.keys(valor_items)[i];
                 const optionElement = document.createElement("option"); 
                 optionElement.value = mes; 

@@ -60,15 +60,6 @@
             color: white;
             font-size: 20px
         }
-        .resultado {
-            font-size: 24px;
-            margin-top: 30px;
-        }
-        .resultado .alerta {
-            font-size: 22px;
-            font-weight: bold;
-            color: red;
-        }
         .oculto0 {
             display: none;
         }
@@ -103,11 +94,15 @@
             padding: 10px 20px;
             display: none;
         }
-        #calculadora, #perdida {
+        #calculadora, #perdida, #resultado {
             margin: 20px;
             border: 2px solid #000;
             padding: 5px;
             width: 300px;
+        }
+        .resultado {
+            font-size: 24px;
+            margin-top: 30px;
         }
     </style>
     
@@ -116,8 +111,7 @@
     <!--img src="banner-prueba.jpg" alt="Bandera Ademys" style="width:100%; height:auto;"-->
     <div class="calc">
     <div id="calculadora">
-        <h1>Calculadora salarial</h1>
-        <p>Ingresá los datos correspondientes para calcular tu sueldo actual (mayo 2025).</p>
+        <h1>Ingresá tus cargos</h1>
         <form class="tdForm" id="formu0" onsubmit="mostrar(event)">
 
             <select id="privada" onchange="elegir_privada()">
@@ -290,24 +284,28 @@
                 <input type="checkbox" name="check_asignaciones" value="conviviente" id="conviviente">
             </form>
         
-        <div id="resultado" class="resultado">
+    </div>
+    <div id="resultado">
+        <h1>Salario actual</h1>
+        <p id="mes-actual"></p>
+        <div class="resultado">
             Sueldo bruto: <span id="bruto" ></span>
         <br>
         <br>
             <b>Sueldo en mano: <span id="neto" ></span></b>
-        </div>
+        </div>        
         <br>
         <button type="button" id="botondetalle" onclick="activar_detalle()">Mostrar detalle</button>	
     </div>
 
     <div id="perdida">
-        <h1>Salario vs. Inflación</h1>
-        <!--p>Elegí un mes para comparar.</p-->
+        <h1>Meses anteriores</h1>
+        <p>Elegí un mes para comparar.</p>
         <form id="contenedor-mes" class="tdForm"></form>
         <div id="resultado-perdida" class="resultado">
     </div> 
 </div> 
 
-    <script src="multidocente.js"></script>
+    <script src="scriptv2.js"></script>
 </body>
 </html>
