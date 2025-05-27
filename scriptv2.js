@@ -1011,7 +1011,7 @@ function mostrar_caida(mes) {
     var resultadoPerdida = document.getElementById("resultado-perdida");
     while (resultadoPerdida.firstChild) resultadoPerdida.removeChild(resultadoPerdida.firstChild);
 
-    var inflacion = ipc[ULTIMO_IPC]/ipc[mes];
+    var inflacion = ipc[ULTIMO_IPC]/ipc[mes]; //ipc[mes] es el IPC del mes anterior al que se seleccionó
     if (docente.calculado) {
         var docente_ = docente.clone(mes);
         var sueldoInflacionado = docente_.sueldoNeto*inflacion;
