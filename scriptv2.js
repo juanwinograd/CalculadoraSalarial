@@ -166,13 +166,14 @@ class Docente {
         //Jerarquizacion y su proporcional del presentismo no cuentan para cmg
         // cargo.salarioMinimo = cargo.salarioMinimo + cargo.jerarquizacion*1.1*Rem;
 
-
-        cargo.antiguedadBasico = (cargo.basico + cargo.jerarquizacion + cargo.dedicacionExclusiva)*this.antiguedad;
-        cargo.antiguedadDec483 = cargo.dec483*this.antiguedad
     }
 
     //calcula el sueldo a partir de los items
     calcular_sueldo() {
+        
+        //la antigüedad es para el docente, no el cargo
+        this.antiguedadBasico = (this.basico + this.jerarquizacion + this.dedicacionExclusiva)*this.antiguedad;
+        this.antiguedadDec483 = this.dec483*this.antiguedad
 
         //sumo las cifras remunerativas
         this.sinCMG = (this.basico*1.1 + this.dec483*1.1 + this.antiguedadBasico + this.antiguedadDec483 + this.supleEscRec)*Rem;
@@ -346,7 +347,7 @@ fetch('https://raw.githubusercontent.com/juanwinograd/CalculadoraAdemys/main/ipc
             optionElement.textContent = 'Seleccionar mes'; 
             optionElement.value = ''; 
             select.appendChild(optionElement);
-            for (let i = Object.keys(valor_items).length - 1; i >= 1; i--) {
+            for (let i = Object.keys(valor_items).length - 2; i >= 1; i--) {
                 let mes = Object.keys(valor_items)[i];
                 const optionElement = document.createElement("option"); 
                 optionElement.value = mes; 
