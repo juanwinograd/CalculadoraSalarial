@@ -1,4 +1,4 @@
-const MES_ACTUAL = "junio 2025"; const A_COBRAR = "julio 2025";
+const MES_ACTUAL = "julio 2025"; const A_COBRAR = "agosto 2025";
 const ULTIMO_IPC = "julio 2025";
 document.getElementById("mes-actual").innerHTML = "Sueldo de "+MES_ACTUAL.slice(0, -5)+" (a cobrar en "+A_COBRAR.slice(0, -5)+")";
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
@@ -855,7 +855,7 @@ function calcular(n) {
         document.getElementById('neto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoNeto);
 
         //AGUINALDO
-        document.getElementById('sac').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.aguinaldo);
+        // document.getElementById('sac').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.aguinaldo);
 
         //Si está activado el detalle lo muestro
         if (mostrarDetalle == true) {            mostrar_detalle();        }
