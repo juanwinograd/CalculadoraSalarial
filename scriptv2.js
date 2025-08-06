@@ -735,14 +735,14 @@ function elegir_terciaria(evt) {
     docente.cargos[n].horas = -1;  document.getElementById("horas"+n).style.display = "none";
     var selectorCargo = document.getElementById(id);
     
-    // director, vice y regente los trato como jc
+    // director, vice, regente los trato como jc
     if (selectorCargo.selectedIndex < 4 ) {
         docente.cargos[n].jornada = "JC";
         if (selectorCargo.selectedIndex == 1 ) {docente.cargos[n].plus = 0.30;	}
         else {docente.cargos[n].plus = 0.15;}
     }
     //horas catedra			
-    else if (selectorCargo.selectedIndex == 9) {
+    else if (selectorCargo.selectedIndex == 11) {
         docente.cargos[n].plus = 0;
         docente.cargos[n].jornada = "HorasT"
         document.getElementById("horas"+n).style.display = "inline";
