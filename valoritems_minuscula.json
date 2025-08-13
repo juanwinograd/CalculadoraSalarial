@@ -376,5 +376,23 @@
     "salarioMinimoPiso": 1133869,
     "salarioMinimoPisoJS": 450455,
     "valorUMAF": 798.7089996
+  },
+  "agosto 2025": {
+    "puntoIndice": 184.855,
+    "dec483": 541354,
+    "dec483Piso": 517631,
+    "sumaFija": 60000,
+    "adicionalEspecial": 68000,
+    "fonid": 0,
+    "conectividad": 0,
+    "adicionalExtendida": 130208,
+    "mdm0_60": 323092,
+    "mdm0_60Piso": 310025,
+    "mdm70_120": 400355,
+    "mdm70_120Piso": 384185,
+    "salarioMinimo": 1438496,
+    "salarioMinimoPiso": 1169925,
+    "salarioMinimoPisoJS": 464989,
+    "valorUMAF": 798.7089996
   }
 }
