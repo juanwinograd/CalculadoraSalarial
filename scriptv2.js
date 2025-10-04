@@ -273,16 +273,16 @@ class Docente {
     sumar_asignaciones() {
         let franja;
         let sueldo = this.sueldoBruto;
-        if (sueldo >= TopesAsignaciones[2]*this.valoresJC["valorUMAF"]) {
+        if (sueldo >= TopesAsignaciones[2]*this.valoresJC["valorUMAF"]/50) {
             for (let asignacion in asignaciones) { 
                 this[asignacion] = MontosAsignaciones[asignacion][3]*asignaciones[asignacion]; 
                 items[asignacion].descripcion = "Superaste el tope puesto por la nueva ley. Si venías cobrando de antes, tenés que seguir cobrando el mismo monto"
             }
         }
         else {
-            if (sueldo >= TopesAsignaciones[1]*this.valoresJC["valorUMAF"])
+            if (sueldo >= TopesAsignaciones[1]*this.valoresJC["valorUMAF"]/50)
                 franja = 2;
-            else if (sueldo >= TopesAsignaciones[0]*this.valoresJC["valorUMAF"])
+            else if (sueldo >= TopesAsignaciones[0]*this.valoresJC["valorUMAF"]/50)
                 franja = 1;
             else
                 franja = 0;
