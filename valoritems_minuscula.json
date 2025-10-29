@@ -412,5 +412,23 @@
     "salarioMinimoPiso": 1204058,
     "salarioMinimoPisoJS": 482055,
     "valorUMAF": 798.7089996
-  }
+  },
+  "octubre 2025": {
+    "puntoIndice": 189.477,
+    "dec483": 576342,
+    "dec483Piso": 552026,
+    "sumaFija": 60000,
+    "adicionalEspecial": 68000,
+    "fonid": 0,
+    "conectividad": 0,
+    "adicionalExtendida": 133368,
+    "mdm0_60": 350542,
+    "mdm0_60Piso": 337148,
+    "mdm70_120": 434370,
+    "mdm70_120Piso": 417795,
+    "salarioMinimo": 1511145,
+    "salarioMinimoPiso": 1235860,
+    "salarioMinimoPisoJS": 494957,
+    "valorUMAF": 798.7089996
+  } 
 }
