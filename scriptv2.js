@@ -622,10 +622,10 @@ function elegir_especial(evt) {
     //director
     if (selectorCargo.selectedIndex == 1) { docente.cargos[n].plus = 0.21; docente.cargos[n].jornada = "JC";}
     //vice o secratario
-    else if (selectorCargo.selectedIndex < 4) { docente.cargos[n].plus = 0.15; docente.cargos[n].jornada = "JC";}
+    else if (selectorCargo.selectedIndex < 7) { docente.cargos[n].plus = 0.15; docente.cargos[n].jornada = "JC";}
     //acdm 40
-    else if (selectorCargo.selectedIndex < 6) { docente.cargos[n].plus = 0; docente.cargos[n].jornada = "JC";}
-    //ILSE
+    else if (selectorCargo.selectedIndex < 9) { docente.cargos[n].plus = 0; docente.cargos[n].jornada = "JC";}
+    //M Especiales, lenguaje de señas
     else if (selectorCargo.selectedIndex >= selectorCargo.length-2) {				
         docente.cargos[n].jornada = "HorasM";
         docente.cargos[n].plus = 0;
