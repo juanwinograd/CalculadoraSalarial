@@ -1,5 +1,5 @@
-const MES_ACTUAL = "diciembre 2025"; const A_COBRAR = "enero 2026";
-const ULTIMO_IPC = "diciembre 2025";
+const MES_ACTUAL = "enero 2026"; const A_COBRAR = "febrero 2026";
+const ULTIMO_IPC = "enero 2026";
 document.getElementById("mes-actual").innerHTML = "Sueldo de "+MES_ACTUAL.slice(0, -5)+" (a cobrar en "+A_COBRAR.slice(0, -5)+")";
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
 var Rem = 1 - (DescuentoOS + DescuentoJubilacion + DescuentoFCompensador);
@@ -230,8 +230,8 @@ class Docente {
         this.sueldoNeto = this.sueldoBruto + this.descuentoTotal;
 
         //AGUINALDO
-        this.aguinaldo = (this.remus*(1-this.PCDescuento))/2 + this.cmg/2;
-        if (this.antiguedad < 0.5) this.aguinaldo = this.aguinaldo + this.mdm/2;
+        // this.aguinaldo = (this.remus*(1-this.PCDescuento))/2 + this.cmg/2;
+        // if (this.antiguedad < 0.5) this.aguinaldo = this.aguinaldo + this.mdm/2;
     }
 
     //suma todos los cargos de un docente
@@ -855,7 +855,7 @@ function calcular(n) {
         document.getElementById('neto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoNeto);
 
         //AGUINALDO
-        document.getElementById('sac').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.aguinaldo);
+        // document.getElementById('sac').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.aguinaldo);
 
         //Si está activado el detalle lo muestro
         if (mostrarDetalle == true) {            mostrar_detalle();        }
