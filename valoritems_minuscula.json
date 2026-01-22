@@ -468,21 +468,21 @@
     "valorUMAF": 798.7089996
   },
   "enero 2026": {
-    "puntoIndice": 194.1,
-    "dec483": 592454,
-    "dec483Piso": 567545,
+    "puntoIndice": 199.93,
+    "dec483": 612756,
+    "dec483Piso": 587100,
     "sumaFija": 60000,
     "adicionalEspecial": 68000,
     "fonid": 0,
     "conectividad": 0,
-    "adicionalExtendida": 136529,
-    "mdm0_60": 359092,
-    "mdm0_60Piso": 345371,
-    "mdm70_120": 444964,
-    "mdm70_120Piso": 427985,
-    "salarioMinimo": 1549661,
-    "salarioMinimoPiso": 1267661,
-    "salarioMinimoPisoJS": 507858,
-    "valorUMAF": 798.7089996
+    "adicionalExtendida": 140625,
+    "mdm0_60": 369866,
+    "mdm0_60Piso": 355734,
+    "mdm70_120": 458312,
+    "mdm70_120Piso": 440826,
+    "salarioMinimo": 1598190,
+    "salarioMinimoPiso": 1307730,
+    "salarioMinimoPisoJS": 524113.6,
+    "valorUMAF": 873.1239184
   }
 }
