@@ -1051,7 +1051,7 @@ function mostrar_caida(mes) {
         
         var p5 = document.createElement('p');
         p5.innerHTML =  "*Fuente: Instituto de Estadística y Censos de la Ciudad de Buenos Aires";
-        if (ipc[A_COBRAR] == undefined) {p5.innerHTML +=  ". (Sin contemplar la inflación de "+MES_ACTUAL+" que aún no se publicó.)";}
+        if (ipc[A_COBRAR] == undefined) {p5.innerHTML +=  ". (Sin contemplar la inflación de "+A_COBRAR+" que aún no se publicó.)";}
         p5.style.fontSize = "15px"; p5.style.fontStyle = "italic";
         document.getElementById("resultado-perdida").appendChild(p5);
     }
