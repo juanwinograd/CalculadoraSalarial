@@ -352,7 +352,7 @@ fetch('valoritems_minuscula.json')
         optionElement.textContent = 'Seleccionar mes'; 
         optionElement.value = ''; 
         select.appendChild(optionElement);
-        for (let i = Object.keys(valor_items).length - 2; i >= 1; i--) {
+        for (let i = Object.keys(valor_items).length - 2; i >= 0; i--) {
             let mes = Object.keys(valor_items)[i];
             const optionElement = document.createElement("option"); 
             optionElement.value = mes; 
@@ -1025,7 +1025,7 @@ function mostrar_caida(mes) {
         var docente_ = docente.clone(mes);
         var sueldoInflacionado = docente_.sueldoNeto*inflacion;
         var perdida = (-1+docente.sueldoNeto/sueldoInflacionado)*100;
-        var aumento_necesario = sueldoInflacionado/docente.sueldoNeto-1;
+        // var aumento_necesario = sueldoInflacionado/docente.sueldoNeto-1;
         // console.log("caída: ",perdida);
         // console.log("aumento necesario: ",aumento_necesario);
     
