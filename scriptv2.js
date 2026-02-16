@@ -1062,3 +1062,11 @@ function mostrar_caida(mes) {
         document.getElementById("resultado-perdida").appendChild(p1);
     }
 }
+function sueldo_historico() {
+    var sueldos = {};
+    for (mes in valor_items) {
+        var docente_ = docente.clone(mes);
+        sueldos[mes] = docente_.sueldoNeto;
+    }
+    return sueldos;
+}
