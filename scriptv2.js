@@ -1,4 +1,4 @@
-const MES_ACTUAL = "enero 2026"; const A_COBRAR = "febrero 2026";
+const MES_ACTUAL = "febrero 2026"; const A_COBRAR = "marzo 2026";
 const ULTIMO_IPC = "enero 2026";
 document.getElementById("mes-actual").innerHTML = "Sueldo de "+MES_ACTUAL.slice(0, -5)+" (a cobrar en "+A_COBRAR.slice(0, -5)+")";
 const DescuentoOS = 0.06, DescuentoJubilacion = 0.13, DescuentoFCompensador = 0.003, DescuentoCajaComp = 0.045;
