@@ -275,8 +275,8 @@ class Docente {
         let sueldo = this.sueldoBruto;
         if (sueldo >= TopesAsignaciones[2]*this.valoresJC["valorUMAF"]) {
             for (let asignacion in asignaciones) { 
-                this[asignacion] = MontosAsignaciones[asignacion][3]*asignaciones[asignacion]; 
-                items[asignacion].descripcion = "Superaste el tope puesto por la nueva ley. Si venías cobrando de antes, tenés que seguir cobrando el mismo monto"
+                this[asignacion] = 0; 
+                //items[asignacion].descripcion = "Superaste el tope de ingresos."
             }
         }
         else {
