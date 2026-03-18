@@ -1052,9 +1052,9 @@ function mostrar_caida(mes) {
         var p5 = document.createElement('p');
         p5.innerHTML =  "*Fuente: Instituto de Estadística y Censos de la Ciudad de Buenos Aires";
         if (ipc[A_COBRAR] == undefined) {
-            var aclaracion = ". (Sin contemplar la inflación de "+A_COBRAR+" que aún no se publicó.)";
+            var aclaracion = ". (Sin contemplar la inflación de "+A_COBRAR.split(' ')[0]+" que aún no se publicó.)";
             if (ipc[MES_ACTUAL] == undefined) {
-                aclaracion = ". (Sin contemplar la inflación de "+MES_ACTUAL+" ni la de "+A_COBRAR+" que aún no se publicó.)";
+                aclaracion = ". (Sin contemplar la inflación de "+MES_ACTUAL.split(' ')[0]+" ni la de "+A_COBRAR.split(' ')[0]+" que aún no fueron publicadas.)";
             }
             p5.innerHTML += aclaracion;
         }
