@@ -520,5 +520,23 @@
     "salarioMinimoPiso": 1369638,
     "salarioMinimoPisoJS": 549228.9,
     "valorUMAF": 873.1239184
+  },
+    "abril 2026": {
+    "puntoIndice": 208.93,
+    "dec483": 644122,
+    "dec483Piso": 617312,
+    "sumaFija": 60000,
+    "adicionalEspecial": 68000,
+    "fonid": 0,
+    "conectividad": 0,
+    "adicionalExtendida": 146953,
+    "mdm0_60": 386510,
+    "mdm0_60Piso": 371742.2,
+    "mdm70_120": 478936,
+    "mdm70_120Piso": 460663.2,
+    "salarioMinimo": 1673168,
+    "salarioMinimoPiso": 1369638,
+    "salarioMinimoPisoJS": 549228.9,
+    "valorUMAF": 873.1239184
   }
 }
