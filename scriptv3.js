@@ -953,7 +953,7 @@ function activar_detalle() {
 function agregar_cargo() {
     
     var id = evt.target.id;
-    var n = id[id.length-1];
+    var n = parseInt(id[id.length-1]);
     var formu = document.getElementById("formu0").cloneNode(true);
     //le pongo 1 a todos los id
     formu.setAttribute("id","formu"+(n+1));
@@ -974,22 +974,22 @@ function agregar_cargo() {
     )
 
     document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
-    document.getElementById("botoncargo0").innerHTML = "-";
-    document.getElementById("textocargo0").innerHTML = "Eliminar segundo cargo";
-    document.getElementById("botoncargo0").setAttribute("onclick","eliminar_cargo(event)");
+    document.getElementById("botoncargo"+n).innerHTML = "-";
+    document.getElementById("textocargo"+n).innerHTML = "Eliminar segundo cargo";
+    document.getElementById("botoncargo"+n).setAttribute("onclick","eliminar_cargo(event)");
     cargos += 1;
     docente.cargos.push(new Cargo(docente))
     }
 function eliminar_cargo(evt) {
     
     var id = evt.target.id;
-    var n = id[id.length-1];
-    document.getElementById("formu1").remove();
-    document.getElementById("botoncargo").innerHTML = "+";
-    document.getElementById("textocargo").innerHTML = "Agregar otro cargo";
+    var n = parseInt(id[id.length-1]);
+    document.getElementById("formu"+(n+1)).remove();
+    document.getElementById("botoncargo"+(n+1)).innerHTML = "+";
+    document.getElementById("textocargo"+(n+1)).innerHTML = "Agregar otro cargo";
     cargos -= 1;
     docente.cargos.pop()
-    calcular(0);
+    calcular(n-1);
 }
 function agregar_asignaciones() {
     if (mostrarAsignaciones == false) {
