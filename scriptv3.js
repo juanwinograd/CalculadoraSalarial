@@ -951,40 +951,45 @@ function activar_detalle() {
     }
 }
 function agregar_cargo() {
-    if (cargos < 2) {
-        var formu = document.getElementById("formu0").cloneNode(true);
-        //le pongo 1 a todos los id
-        formu.setAttribute("id","formu1");
-        formu.childNodes.forEach(
-            function (node) {
-                if (node.id != undefined) {
-                if (node.id == "antiguedad" || node.id == "afiliado" || node.id == "privada"  || node.id == "presentismo" || node.id == "") {
-                    formu.removeChild(node);
+    
+    var id = evt.target.id;
+    var n = id[id.length-1];
+    var formu = document.getElementById("formu0").cloneNode(true);
+    //le pongo 1 a todos los id
+    formu.setAttribute("id","formu"+(n+1));
+    formu.childNodes.forEach(
+        function (node) {
+            if (node.id != undefined) {
+            if (node.id == "antiguedad" || node.id == "afiliado" || node.id == "privada"  || node.id == "presentismo" || node.id == "") {
+                formu.removeChild(node);
+            }
+            else {
+                node.id = node.id.substring(0,node.id.length-1) + (n+1);
+                if (node.getAttribute("class") == "oculto0") {
+                    node.setAttribute("class","oculto"+(n+1));
+                    node.style.display = "none";
                 }
-                else {
-                    node.id = node.id.substring(0,node.id.length-1) + "1";
-                    if (node.getAttribute("class") == "oculto0") {
-                        node.setAttribute("class","oculto1");
-                        node.style.display = "none";
-                    }
-                }
-            }}
-        )
+            }
+        }}
+    )
 
-        document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
-        document.getElementById("botoncargo").innerHTML = "-";
-        document.getElementById("textocargo").innerHTML = "Eliminar segundo cargo";
-        cargos += 1;
-        docente.cargos.push(new Cargo(docente))
+    document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
+    document.getElementById("botoncargo0").innerHTML = "-";
+    document.getElementById("textocargo0").innerHTML = "Eliminar segundo cargo";
+    document.getElementById("botoncargo0").setAttribute("onclick","eliminar_cargo(event)");
+    cargos += 1;
+    docente.cargos.push(new Cargo(docente))
     }
-    else {
-        document.getElementById("formu1").remove();
-        document.getElementById("botoncargo").innerHTML = "+";
-        document.getElementById("textocargo").innerHTML = "Agregar otro cargo";
-        cargos -= 1;
-        docente.cargos.pop()
-        calcular(0);
-    }
+function eliminar_cargo(evt) {
+    
+    var id = evt.target.id;
+    var n = id[id.length-1];
+    document.getElementById("formu1").remove();
+    document.getElementById("botoncargo").innerHTML = "+";
+    document.getElementById("textocargo").innerHTML = "Agregar otro cargo";
+    cargos -= 1;
+    docente.cargos.pop()
+    calcular(0);
 }
 function agregar_asignaciones() {
     if (mostrarAsignaciones == false) {
