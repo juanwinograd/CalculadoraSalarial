@@ -743,7 +743,7 @@ function elegir_terciaria(evt) {
         else {docente.cargos[n].plus = 0.15;}
     }
     //horas catedra			
-    else if (selectorCargo.selectedIndex == 13) {
+    else if (selectorCargo.selectedIndex == selectorCargo.length - 1) {
         docente.cargos[n].plus = 0;
         docente.cargos[n].jornada = "HorasT"
         document.getElementById("horas"+n).style.display = "inline";
