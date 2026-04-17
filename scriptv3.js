@@ -23,7 +23,8 @@ const MontosAsignaciones = {
             violencia : [366,366,336,0]
 };
 
-var mostrarDetalle = false, segundoCargo = false, mostrarAsignaciones = false;
+var mostrarDetalle = false, mostrarAsignaciones = false;
+var cargos = 1;
 var privada = false;
 var asignaciones = {
             embarazo : 0,
@@ -829,7 +830,11 @@ function calcular(n) {
     //si está el detalle viejo lo borro
     if (mostrarDetalle == true) {limpiar_detalle();}
 
-    if ((docente.cargos[n].jornada == "HorasT" || docente.cargos[n].jornada == "HorasM")  && docente.cargos[n].horas <= 0) {
+    if (docente.antiguedad == -1) {
+        document.getElementById('bruto').innerHTML = "Seleccionar antigüedad";
+        document.getElementById('neto').innerHTML = "Seleccionar antigüedad";
+                }
+    else if ((docente.cargos[n].jornada == "HorasT" || docente.cargos[n].jornada == "HorasM")  && docente.cargos[n].horas <= 0) {
             document.getElementById('bruto').innerHTML = "Ingresar cant. horas";
             document.getElementById('neto').innerHTML = "Ingresar cant. horas";
                     }
@@ -837,18 +842,15 @@ function calcular(n) {
         document.getElementById('bruto').innerHTML = "Seleccionar cargo";
         document.getElementById('neto').innerHTML = "Seleccionar cargo";
                 }
-    else if (docente.antiguedad == -1) {
-        document.getElementById('bruto').innerHTML = "Seleccionar antigüedad";
-        document.getElementById('neto').innerHTML = "Seleccionar antigüedad";
-                }
-    else if (segundoCargo && docente.cargos[1].puntaje == 0) {
-        document.getElementById('bruto').innerHTML = "Seleccionar segundo cargo";
-        document.getElementById('neto').innerHTML = "Seleccionar segundo cargo";
-                }
-    // else if (docente.mes == "") {
-    //     document.getElementById('bruto').innerHTML = "Seleccionar mes";
-    //     document.getElementById('neto').innerHTML = "Seleccionar mes";
+
+    // else if (cargos > 1) {
+    //     for (cargo of docente.cargos) {
+    //     if (cargos.puntaje == 0) {
+    //     document.getElementById('bruto').innerHTML = "Seleccionar segundo cargo";
+    //     document.getElementById('neto').innerHTML = "Seleccionar segundo cargo";
     //             }
+    //         }
+    // }
     else {
         docente.calcular_sueldo_docente();
         document.getElementById('bruto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoBruto);	
@@ -949,7 +951,7 @@ function activar_detalle() {
     }
 }
 function agregar_cargo() {
-    if (segundoCargo == false) {
+    if (cargos < 2) {
         var formu = document.getElementById("formu0").cloneNode(true);
         //le pongo 1 a todos los id
         formu.setAttribute("id","formu1");
@@ -972,14 +974,14 @@ function agregar_cargo() {
         document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
         document.getElementById("botoncargo").innerHTML = "-";
         document.getElementById("textocargo").innerHTML = "Eliminar segundo cargo";
-        segundoCargo = true;	
+        cargos += 1;
         docente.cargos.push(new Cargo(docente))
     }
     else {
         document.getElementById("formu1").remove();
         document.getElementById("botoncargo").innerHTML = "+";
         document.getElementById("textocargo").innerHTML = "Agregar otro cargo";
-        segundoCargo = false; 
+        cargos -= 1;
         docente.cargos.pop()
         calcular(0);
     }
