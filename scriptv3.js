@@ -950,7 +950,7 @@ function activar_detalle() {
         document.getElementById("botondetalle").innerHTML = "Mostrar detalle"
     }
 }
-function agregar_cargo() {
+function agregar_cargo(evt) {
     
     var id = evt.target.id;
     var n = parseInt(id[id.length-1]);
