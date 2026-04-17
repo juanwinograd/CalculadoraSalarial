@@ -736,7 +736,7 @@ function elegir_terciaria(evt) {
     var selectorCargo = document.getElementById(id);
     
     // director, vice, regente los trato como jc
-    if (selectorCargo.selectedIndex < 4 ) {
+    if (selectorCargo.selectedIndex < 5 ) {
         docente.cargos[n].jornada = "JC";
         if (selectorCargo.selectedIndex == 1 ) {docente.cargos[n].plus = 0.30;	}
         else {docente.cargos[n].plus = 0.15;}
