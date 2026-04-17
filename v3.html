@@ -118,6 +118,22 @@
                 <option selected="selected">Escuela pública</option>
                 <option>Escuela privada</option>
             </select>
+                    
+            <select id="antiguedad" onchange="elegir_antiguedad()">
+                <option value=-1> Antigüedad</option>
+                <option value=0>0% (0 años)</option>
+                <option value=0.3>30% (1 año)</option>
+                <option value=0.4>40% (4 años)</option>
+                <option value=0.5>50% (7 años)</option>
+                <option value=0.6>60% (10 años)</option>
+                <option value=0.7>70% (12 años)</option>
+                <option value=0.8>80% (14 años)</option>
+                <option value=0.9>90% (16 años)</option>
+                <option value=1>100% (18 años)</option>
+                <option value=1.1>110% (20 años)</option>
+                <option value=1.2>120% (22 años)</option>
+            </select>
+
             <select id="area0" onchange="elegir_area(event)">
                 <option>Área</option>
                 <option value="supervision">Supervisión</option>
@@ -228,7 +244,7 @@
                 <option value=0>Cargo</option>
                 <option value=3422>Rectorx</option>
                 <option value=2874>Vicerrectorx</option>
-                <option value=2365>Vicerrectox/Sec Académico (IFTS)</option>
+                <option value=2365>Vicerrectox/Sec Académico(IFTS)</option>
                 <option value=2555>Regentx</option>
                 <option value=2500>Secretarix (ENS-IES-Grie)</option>
                 <option value=1656>Secretarix (IFTS)</option>
@@ -244,21 +260,6 @@
             <input class="oculto0" placeholder="Horas" type="number" id="horas0" max="72" min="1" onchange="elegir_horas(event)">
         
             <br>
-        
-            <select id="antiguedad" onchange="elegir_antiguedad()">
-                <option value=-1> Antigüedad</option>
-                <option value=0>0% (0 años)</option>
-                <option value=0.3>30% (1 año)</option>
-                <option value=0.4>40% (4 años)</option>
-                <option value=0.5>50% (7 años)</option>
-                <option value=0.6>60% (10 años)</option>
-                <option value=0.7>70% (12 años)</option>
-                <option value=0.8>80% (14 años)</option>
-                <option value=0.9>90% (16 años)</option>
-                <option value=1>100% (18 años)</option>
-                <option value=1.1>110% (20 años)</option>
-                <option value=1.2>120% (22 años)</option>
-            </select>
 
             <label for="afiliado"> Afiliadx </label>
             <input type="checkbox" id="afiliado" onchange="elegir_afiliado()">
