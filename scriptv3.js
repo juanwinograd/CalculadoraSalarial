@@ -987,6 +987,7 @@ function eliminar_cargo(evt) {
     document.getElementById("formu"+(n+1)).remove();
     document.getElementById("botoncargo"+(n+1)).innerHTML = "+";
     document.getElementById("textocargo"+(n+1)).innerHTML = "Agregar otro cargo";
+    document.getElementById("botoncargo"+(n+1)).setAttribute("onclick","agregar_cargo(event)");
     cargos -= 1;
     docente.cargos.pop()
     calcular(n-1);
