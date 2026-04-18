@@ -985,9 +985,9 @@ function eliminar_cargo(evt) {
     var id = evt.target.id;
     var n = parseInt(id[id.length-1]);
     document.getElementById("formu"+(n+1)).remove();
-    document.getElementById("botoncargo"+(n+1)).innerHTML = "+";
-    document.getElementById("textocargo"+(n+1)).innerHTML = "Agregar otro cargo";
-    document.getElementById("botoncargo"+(n+1)).setAttribute("onclick","agregar_cargo(event)");
+    document.getElementById("botoncargo"+n).innerHTML = "+";
+    document.getElementById("textocargo"+n).innerHTML = "Agregar otro cargo";
+    document.getElementById("botoncargo"+n).setAttribute("onclick","agregar_cargo(event)");
     cargos -= 1;
     docente.cargos.pop()
     calcular(n-1);
