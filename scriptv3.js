@@ -998,8 +998,8 @@ function agregar_cargo() {
 
     // después del segundo cargo se pone rojo el botón para agregar cargo
     if (ncargos > 1) {
-        document.getElementById("botoncargo").style.backgroundColor = "red";
-        document.getElementById("textocargo").style.color = "red";
+        document.getElementById("botoncargo").style.backgroundColor = "darkred";
+        document.getElementById("textocargo").style.color = "darkred";
         if (ncargos == 3) {
            document.getElementById("textocargo").innerHTML = "Agregar otro cargo 😵"
         } 
