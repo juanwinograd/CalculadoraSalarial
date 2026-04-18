@@ -969,14 +969,15 @@ function agregar_cargo(evt) {
                 }
             }
         }
-    )
-    if (n == 2) {
-        alert("Trabajar 3 cargos es malo para nuestra salud física y mental y degrada la educación. "+
-            "Luchamos por un salario igual a la canasta familiar para poder vivir dignamente con un cargo.");
+    );
+    if (ncargos > 2) {
+        document.getElementById("botoncargo"+(n+1)).setAttribute("background-color","red");
+        document.getElementById("textocargo"+(n+1)).setAttribute("color","red");
     }
-    if (n == 3) {
-        document.getElementById("botoncargo"+(n+1)).style.display = "none";
-        document.getElementById("textocargo"+(n+1)).style.display = "none";
+
+    if (ncargos == 4) {
+        document.getElementById("botoncargo"+(n+1)).remove();
+        document.getElementById("textocargo"+(n+1)).remove();
     }
     
     document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
