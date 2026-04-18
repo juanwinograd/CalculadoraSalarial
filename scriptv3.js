@@ -947,7 +947,7 @@ function activar_detalle() {
         document.getElementById("botondetalle").innerHTML = "Mostrar detalle"
     }
 }
-function agregar_cargo(evt) {
+function agregar_cargo() {
     
     var n = ncargos-1;
     ncargos += 1;
@@ -970,40 +970,73 @@ function agregar_cargo(evt) {
             }
         }
     );
-
-    document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
+    document.getElementById("calculadora").insertBefore(formu,document.getElementById("agregar-cargo"));
     
     //el boton de sumar cargo se convierte en botón de eliminar cargo
-    document.getElementById("botoncargo"+n).innerHTML = "-";
-    document.getElementById("textocargo"+n).innerHTML = "Eliminar cargo";
-    document.getElementById("botoncargo"+n).setAttribute("onclick","eliminar_cargo(event)");
+    // var divEliminar = document.createElement("div");
+    // divEliminar.setAttribute("id","eliminarcargo"+(n+1));
+    // divEliminar.setAttribute("class","sumcargo");
+    // var botonEliminar = document.createElement("button");
+    // botonEliminar.appendChild(document.createTextNode("-"));
+    // botonEliminar.setAttribute("id", "eliminarcargo" + (n+1));
+    // botonEliminar.setAttribute("onclick", "eliminar_cargo(event)");
+    // divEliminar.appendChild(botonEliminar);
+    // var labelEliminar = document.createElement("label");
+    // labelEliminar.appendChild(document.createTextNode(" Eliminar cargo "+(n+2)));
+    // labelEliminar.setAttribute("id", "textocargo" + (n+1));
+    // labelEliminar.setAttribute("for", "eliminarcargo" + (n+1));
+    // divEliminar.appendChild(labelEliminar);
+    if (ncargos == 2) {
+        document.getElementById("eliminar-cargo").style.display = "inline";
+    }
+    else {
+        var divEliminar = document.getElementById("eliminar-cargo").cloneNode(true);
+        document.getElementById("eliminar-cargo").remove();
+        document.getElementById("calculadora").insertBefore(divEliminar,document.getElementById("formu"+(n+1)));
+        document.getElementById("textoeliminarcargo").innerHTML = "Eliminar cargo "+(n+2);
+    }
 
     // después del segundo cargo se pone rojo el botón para agregar cargo
-    document.getElementById("botoncargo"+(n+1)).style.backgroundColor = "red";
-    document.getElementById("textocargo"+(n+1)).style.color = "red";
-    // después del tercer cargo cambio el texto a "agregar otro cargo" con cara de shock
-    if (ncargos == 3) {
-        document.getElementById("textocargo"+(n+1)).innerHTML = "Agregar otro cargo 😵";
+    if (ncargos > 1) {
+        document.getElementById("botoncargo").style.backgroundColor = "red";
+        document.getElementById("textocargo").style.color = "red";
+        if (ncargos == 3) {
+           document.getElementById("textocargo").innerHTML = "Agregar otro cargo 😵"
+        } 
+        if (ncargos == 4) {
+            document.getElementById("agregar-cargo").style.display = "none";
+        }
     }
-    //si ya hay 4 cargos, elimino la posibilidad de agregar más
-    if (ncargos == 4) {
-        document.getElementById("botoncargo"+(n+1)).remove();
-        document.getElementById("textocargo"+(n+1)).remove();
-    }
-
-    docente.cargos.push(new Cargo(docente))
+    docente.cargos.push(new Cargo(docente));
 }
 function eliminar_cargo(evt) {
     
-    var id = evt.target.id;
-    var n = parseInt(id[id.length-1]);
-    document.getElementById("formu"+(n+1)).remove();
-    document.getElementById("botoncargo"+n).innerHTML = "+";
-    document.getElementById("textocargo"+n).innerHTML = "Agregar otro cargo";
-    document.getElementById("botoncargo"+n).setAttribute("onclick","agregar_cargo(event)");
+    // var id = evt.target.id;
+    // docente.cargos.splice(n,1);
+    // n == ncargos-1 esta ok. Si no, pensar
     ncargos -= 1;
-    docente.cargos.splice(n+1,1);
-    //docente.cargos.pop()
+    var n = ncargos;
+    document.getElementById("formu"+n).remove();
+    if (ncargos == 1) {
+        document.getElementById("eliminar-cargo").style.display = "none";
+    }
+    else {
+        var divEliminar = document.getElementById("eliminar-cargo").cloneNode(true);
+        document.getElementById("eliminar-cargo").remove();
+        document.getElementById("calculadora").insertBefore(divEliminar,document.getElementById("formu"+(n-1)));
+        document.getElementById("textoeliminarcargo").innerHTML = "Eliminar cargo "+n;
+    }
+
+    document.getElementById("agregar-cargo").style.display = "inline";
+    if (ncargos < 3) {
+        document.getElementById("textocargo").innerHTML = "Agregar otro cargo"
+        if (ncargos < 2) {            
+            document.getElementById("botoncargo").style.backgroundColor = "orange";
+            document.getElementById("textocargo").style.color = "black";
+        }
+    }
+
+    docente.cargos.pop()
     calcular(n-1);
 }
 function agregar_asignaciones() {
