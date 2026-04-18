@@ -970,23 +970,24 @@ function agregar_cargo(evt) {
             }
         }
     );
+    
+    document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
+    document.getElementById("botoncargo"+n).innerHTML = "-";
+    document.getElementById("textocargo"+n).innerHTML = "Eliminar cargo";
+    document.getElementById("botoncargo"+n).setAttribute("onclick","eliminar_cargo(event)");
+    ncargos += 1;    
     if (ncargos > 2) {
-        document.getElementById("botoncargo"+(n+1)).setAttribute("background-color","red");
-        document.getElementById("textocargo"+(n+1)).setAttribute("color","red");
+        document.getElementById("botoncargo"+(n+1)).style.backgroundColor = "red";
+        document.getElementById("textocargo"+(n+1)).style.color = "red";
     }
 
     if (ncargos == 4) {
         document.getElementById("botoncargo"+(n+1)).remove();
         document.getElementById("textocargo"+(n+1)).remove();
     }
-    
-    document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
-    document.getElementById("botoncargo"+n).innerHTML = "-";
-    document.getElementById("textocargo"+n).innerHTML = "Eliminar cargo";
-    document.getElementById("botoncargo"+n).setAttribute("onclick","eliminar_cargo(event)");
-    ncargos += 1;
+
     docente.cargos.push(new Cargo(docente))
-    }
+}
 function eliminar_cargo(evt) {
     
     var id = evt.target.id;
