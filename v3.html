@@ -88,6 +88,9 @@
             padding: 8px 16px;
             border-radius: 	50%;
         }        
+        #botonasignaciones {
+            margin-top: 30px;
+        }
         .formu-asignaciones {
             border-left: 5px solid orange;
             background-color: #f1f1f1;
@@ -266,14 +269,12 @@
             <label for="presentismo"> Presentismo </label>
             <input type="checkbox" id="presentismo" checked="True" onchange="elegir_presentismo()">
         
-            <br id="br0">
+            <br id="0">
         
             <button class="sumcargo-button"type="button" id="botoncargo0" onclick="agregar_cargo(event)">+</button>
             <label class="sumcargo" id="textocargo0" for="botoncargo0">Agregar otro cargo</label>
         
         </form>
-
-        <br>
 
         <button type="button" id="botonasignaciones" onclick="agregar_asignaciones()">Asignaciones familiares</button>	
             <form class="tdForm formu-asignaciones" id="asignaciones" onchange="elegir_asignaciones()">
