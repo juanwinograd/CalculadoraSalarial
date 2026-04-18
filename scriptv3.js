@@ -842,15 +842,11 @@ function calcular(n) {
         document.getElementById('bruto').innerHTML = "Seleccionar cargo";
         document.getElementById('neto').innerHTML = "Seleccionar cargo";
                 }
+    else if (n > 0 && docente.cargos[n-1].puntaje == 0) {
+        document.getElementById('bruto').innerHTML = "Seleccionar 1er cargo";
+        document.getElementById('neto').innerHTML = "Seleccionar 1er cargo";
+    }
 
-    // else if (cargos > 1) {
-    //     for (cargo of docente.cargos) {
-    //     if (cargos.puntaje == 0) {
-    //     document.getElementById('bruto').innerHTML = "Seleccionar segundo cargo";
-    //     document.getElementById('neto').innerHTML = "Seleccionar segundo cargo";
-    //             }
-    //         }
-    // }
     else {
         docente.calcular_sueldo_docente();
         document.getElementById('bruto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoBruto);	
