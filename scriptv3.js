@@ -983,6 +983,9 @@ function agregar_cargo(evt) {
     document.getElementById("botoncargo"+n).setAttribute("onclick","eliminar_cargo(event)");
 
     ncargos += 1;
+    if (ncargos == 3) {
+        document.getElementById("textocargo"+(n+1)).innerHTML = "Agregar otro cargo 😵";
+    }
     //si ya hay 4 cargos, elimino la posibilidad de agregar más
     if (ncargos == 4) {
         document.getElementById("botoncargo"+(n+1)).remove();
