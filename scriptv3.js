@@ -971,16 +971,19 @@ function agregar_cargo(evt) {
         }
     );
     
+    // después del segundo cargo se pone rojo el botón para agregar cargo
+    document.getElementById("botoncargo"+(n+1)).style.backgroundColor = "red";
+    document.getElementById("textocargo"+(n+1)).style.color = "red";
+    
     document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
+    
+    //el boton de sumar cargo se convierte en botón de eliminar cargo
     document.getElementById("botoncargo"+n).innerHTML = "-";
     document.getElementById("textocargo"+n).innerHTML = "Eliminar cargo";
     document.getElementById("botoncargo"+n).setAttribute("onclick","eliminar_cargo(event)");
-    ncargos += 1;    
-    if (ncargos > 2) {
-        document.getElementById("botoncargo"+(n+1)).style.backgroundColor = "red";
-        document.getElementById("textocargo"+(n+1)).style.color = "red";
-    }
 
+    ncargos += 1;
+    //si ya hay 4 cargos, elimino la posibilidad de agregar más
     if (ncargos == 4) {
         document.getElementById("botoncargo"+(n+1)).remove();
         document.getElementById("textocargo"+(n+1)).remove();
