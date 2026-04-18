@@ -843,6 +843,7 @@ function calcular(n) {
         document.getElementById('neto').innerHTML = "Seleccionar cargo";
                 }
     else if (n > 0 && docente.cargos[n-1].puntaje == 0) {
+        console.log("entro por aca");
         document.getElementById('bruto').innerHTML = "Seleccionar 1er cargo";
         document.getElementById('neto').innerHTML = "Seleccionar 1er cargo";
     }
