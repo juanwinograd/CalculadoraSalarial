@@ -961,7 +961,7 @@ function agregar_cargo(evt) {
             }
             else {
                 node.id = node.id.substring(0,node.id.length-1) + (n+1);
-                if (node.getAttribute("class") == "oculto0") {
+                if (node.getAttribute("class") == "oculto"+n) {
                     node.setAttribute("class","oculto"+(n+1));
                     node.style.display = "none";
                     }
