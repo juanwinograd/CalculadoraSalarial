@@ -24,7 +24,7 @@ const MontosAsignaciones = {
 };
 
 var mostrarDetalle = false, mostrarAsignaciones = false;
-var cargos = 1;
+var ncargos = 1;
 var privada = false;
 var asignaciones = {
             embarazo : 0,
@@ -968,37 +968,32 @@ function agregar_cargo(evt) {
                 if (node.getAttribute("class") == "oculto0") {
                     node.setAttribute("class","oculto"+(n+1));
                     node.style.display = "none";
-                }
-                if (node.tagName == "div") { node.childNodes.forEach(
-                    function (child) {
-                        if (child.id != undefined)
-                            child.id = child.id.substring(0,child.id.length-1) + (n+1);
-                            }
-                        )
                     }
                 }
             }
         }
     )
     
-
     document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
     document.getElementById("botoncargo"+n).innerHTML = "-";
     document.getElementById("textocargo"+n).innerHTML = "Eliminar cargo";
     document.getElementById("botoncargo"+n).setAttribute("onclick","eliminar_cargo(event)");
-    cargos += 1;
+    ncargos += 1;
     docente.cargos.push(new Cargo(docente))
     }
 function eliminar_cargo(evt) {
     
     var id = evt.target.id;
     var n = parseInt(id[id.length-1]);
-
+    if (n < ncargos) {
+        docente.cargos.splice(n,ncargos-n);
+        ncargos = n;
+    }
     document.getElementById("formu"+(n+1)).remove();
     document.getElementById("botoncargo"+n).innerHTML = "+";
     document.getElementById("textocargo"+n).innerHTML = "Agregar otro cargo";
     document.getElementById("botoncargo"+n).setAttribute("onclick","agregar_cargo(event)");
-    cargos -= 1;
+    ncargos -= 1;
     docente.cargos.pop()
     calcular(n-1);
 }

@@ -83,7 +83,7 @@
             font-size: 20px;
             font-weight: bold;
         }
-        .sumcargo button {
+        .sumcargo-button {
             font-size: 24px;
             padding: 8px 16px;
             border-radius: 	50%;
@@ -266,10 +266,11 @@
             <label for="presentismo"> Presentismo </label>
             <input type="checkbox" id="presentismo" checked="True" onchange="elegir_presentismo()">
         
-        <div class="sumcargo" id="sumcargo0">
-            <button type="button" id="botoncargo0" onclick="agregar_cargo(event)">+</button>
-            <label id="textocargo0" for="botoncargo0">Agregar otro cargo</label>
-        </div>
+            <br id="br0">
+        
+            <button class="sumcargo-button"type="button" id="botoncargo0" onclick="agregar_cargo(event)">+</button>
+            <label class="sumcargo" id="textocargo0" for="botoncargo0">Agregar otro cargo</label>
+        
         </form>
 
         <br>
