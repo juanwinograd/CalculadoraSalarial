@@ -982,16 +982,13 @@ function eliminar_cargo(evt) {
     
     var id = evt.target.id;
     var n = parseInt(id[id.length-1]);
-    if (n < ncargos) {
-        docente.cargos.splice(n,ncargos-n);
-        ncargos = n;
-    }
     document.getElementById("formu"+(n+1)).remove();
     document.getElementById("botoncargo"+n).innerHTML = "+";
     document.getElementById("textocargo"+n).innerHTML = "Agregar otro cargo";
     document.getElementById("botoncargo"+n).setAttribute("onclick","agregar_cargo(event)");
     ncargos -= 1;
-    docente.cargos.pop()
+    docente.cargos.splice(n+1,1);
+    //docente.cargos.pop()
     calcular(n-1);
 }
 function agregar_asignaciones() {
