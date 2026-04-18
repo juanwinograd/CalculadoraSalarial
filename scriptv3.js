@@ -949,8 +949,8 @@ function activar_detalle() {
 }
 function agregar_cargo(evt) {
     
-    var id = evt.target.id;
-    var n = parseInt(id[id.length-1]);
+    var n = ncargos-1;
+    ncargos += 1;
     var formu = document.getElementById("formu"+n).cloneNode(true);
     //le pongo 1 a todos los id
     formu.setAttribute("id","formu"+(n+1));
@@ -970,11 +970,7 @@ function agregar_cargo(evt) {
             }
         }
     );
-    
-    // después del segundo cargo se pone rojo el botón para agregar cargo
-    document.getElementById("botoncargo"+(n+1)).style.backgroundColor = "red";
-    document.getElementById("textocargo"+(n+1)).style.color = "red";
-    
+
     document.getElementById("calculadora").insertBefore(formu,document.getElementById("botonasignaciones"));
     
     //el boton de sumar cargo se convierte en botón de eliminar cargo
@@ -982,7 +978,10 @@ function agregar_cargo(evt) {
     document.getElementById("textocargo"+n).innerHTML = "Eliminar cargo";
     document.getElementById("botoncargo"+n).setAttribute("onclick","eliminar_cargo(event)");
 
-    ncargos += 1;
+    // después del segundo cargo se pone rojo el botón para agregar cargo
+    document.getElementById("botoncargo"+(n+1)).style.backgroundColor = "red";
+    document.getElementById("textocargo"+(n+1)).style.color = "red";
+    // después del tercer cargo cambio el texto a "agregar otro cargo" con cara de shock
     if (ncargos == 3) {
         document.getElementById("textocargo"+(n+1)).innerHTML = "Agregar otro cargo 😵";
     }
