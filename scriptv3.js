@@ -954,7 +954,7 @@ function agregar_cargo(evt) {
     
     var id = evt.target.id;
     var n = parseInt(id[id.length-1]);
-    var formu = document.getElementById("formu0").cloneNode(true);
+    var formu = document.getElementById("formu"+n).cloneNode(true);
     //le pongo 1 a todos los id
     formu.setAttribute("id","formu"+(n+1));
     formu.childNodes.forEach(
