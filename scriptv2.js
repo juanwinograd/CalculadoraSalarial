@@ -230,8 +230,8 @@ class Docente {
         this.sueldoNeto = this.sueldoBruto + this.descuentoTotal;
 
         //AGUINALDO
-        // this.aguinaldo = (this.remus*(1-this.PCDescuento))/2 + this.cmg/2;
-        // if (this.antiguedad < 0.5) this.aguinaldo = this.aguinaldo + this.mdm/2;
+        this.aguinaldo = (this.remus*(1-this.PCDescuento))/2 + this.cmg/2;
+        if (this.antiguedad < 0.5) this.aguinaldo = this.aguinaldo + this.mdm/2;
     }
 
     //suma todos los cargos de un docente
@@ -855,7 +855,7 @@ function calcular(n) {
         document.getElementById('neto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoNeto);
 
         //AGUINALDO
-        // document.getElementById('sac').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.aguinaldo);
+        document.getElementById('sac').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.aguinaldo);
 
         //Si está activado el detalle lo muestro
         if (mostrarDetalle == true) {            mostrar_detalle();        }
