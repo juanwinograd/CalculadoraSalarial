@@ -860,8 +860,9 @@ function calcular(n) {
         document.getElementById('neto').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.sueldoNeto);
 
         //AGUINALDO
-        document.getElementById('sac').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.aguinaldo);
-
+        if (JUNIO_DICIEMBRE) {
+            document.getElementById('aguinaldo').innerHTML = Intl.NumberFormat("es-AR", {style: "currency", currency: "ARS", maximumFractionDigits:0}).format(docente.aguinaldo);
+        }
         //Si está activado el detalle lo muestro
         if (mostrarDetalle == true) {            mostrar_detalle();        }
     }
