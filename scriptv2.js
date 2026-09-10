@@ -1,6 +1,6 @@
-const MES_ACTUAL = "agosto 2026";
-const A_COBRAR = "septiembre 2026";
-const ULTIMO_IPC = "julio 2026";
+const MES_ACTUAL = "septiembre 2026";
+const A_COBRAR = "octubre 2026";
+const ULTIMO_IPC = "agosto 2026";
 const JUNIO_DICIEMBRE = false;
 
 document.getElementById("mes-actual").innerHTML = "Sueldo de "+MES_ACTUAL.slice(0, -5)+" (a cobrar en "+A_COBRAR.slice(0, -5)+")";

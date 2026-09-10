@@ -591,9 +591,27 @@
     "salarioMinimo": 1873762,
     "salarioMinimoPiso": 1539152,
     "salarioMinimoPisoJS": 620101,
-    "valorUMAF": 873.1239184
+    "valorUMAF": 1036.136154
   },
   "agosto 2026": {
+    "puntoIndice": 291.087,
+    "dec483": 644122,
+    "dec483Piso": 617312,
+    "sumaFija": 60000,
+    "adicionalEspecial": 68000,
+    "fonid": 0,
+    "conectividad": 0,
+    "adicionalExtendida": 168355,
+    "mdm0_60": 451712,
+    "mdm0_60Piso": 434778,
+    "mdm70_120": 559730,
+    "mdm70_120Piso": 538780,
+    "salarioMinimo": 1951432,
+    "salarioMinimoPiso": 1603438,
+    "salarioMinimoPisoJS": 646266,
+    "valorUMAF": 1036.136154
+  },
+    "septiembre 2026": {
     "puntoIndice": 291.087,
     "dec483": 644122,
     "dec483Piso": 617312,
